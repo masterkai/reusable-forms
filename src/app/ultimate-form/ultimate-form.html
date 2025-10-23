@@ -1,0 +1,12 @@
+@for (field of fieldConfigs(); track field.name) {
+    <label for="{{field}}">{{ capitalizeFirstLetter(field.displayName) }}:
+        <input
+                (ngModelChange)="onFieldChange(field.name, $event)"
+                [ngModel]="fieldValues()[field.name]"
+                [type]="field.type"
+                id="{{field.name}}"
+                name="{{field.name}}"
+        />
+    </label>
+}
+<button (click)="submitForm()">Submit</button>
