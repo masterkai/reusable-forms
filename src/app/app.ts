@@ -5,14 +5,15 @@ import { FieldConfig } from "./types";
 
 @Component({
 	selector: 'app-root',
-	imports: [FormsModule, UltimateForm],
+	imports: [ FormsModule, UltimateForm ],
 	templateUrl: './app.html',
 	styleUrl: './app.css'
 })
 export class App {
 	formFields: (FieldConfig | string)[] = [
 		'name',
-		{ name: 'email', displayName: 'Email', type: 'text' },
+		{ name: 'age', displayName: 'Age', type: 'number' },
+		{ name: 'email', displayName: 'Email' },
 		{ name: 'password', displayName: 'Password', type: 'password' },
 	];
 
