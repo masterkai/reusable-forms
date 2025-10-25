@@ -12,9 +12,10 @@ import { FieldConfig } from "./types";
 export class App {
 	formFields: (FieldConfig | string)[] = [
 		'name',
-		{ name: 'age', displayName: 'Age', type: 'number' },
-		{ name: 'email', displayName: 'Email' },
-		{ name: 'password', displayName: 'Password', type: 'password' },
+		{ name: 'age', type: 'number' },
+		{ name: 'email' },
+		{ name: 'password', displayName: 'Password', type: 'password', hint: 'Must be at least 8 characters long.' },
+		{ name: 'myFavoriteColor', displayName: 'My Favorite Color' },
 	];
 
 	protected readonly title = signal('reusable-forms');

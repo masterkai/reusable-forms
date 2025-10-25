@@ -3,7 +3,8 @@ import { FormsModule } from "@angular/forms";
 import { FieldConfig } from "../types";
 
 const defaultFieldConfigsValues = {
-	type: 'text'
+	type: 'text',
+	hint: '',
 }
 
 @Component({
@@ -26,7 +27,7 @@ export class UltimateForm implements OnInit {
 					displayName: field,
 				};
 			} else {
-				return { ...defaultFieldConfigsValues, ...field };
+				return { ...defaultFieldConfigsValues, displayName: field.name, ...field };
 			}
 		});
 	})

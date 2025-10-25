@@ -3,6 +3,7 @@
         <input
                 (ngModelChange)="onFieldChange(field.name, $event)"
                 [ngModel]="fieldValues()[field.name]"
+                [placeholder]="field.hint"
                 [type]="field.type"
                 id="{{field.name}}"
                 name="{{field.name}}"
