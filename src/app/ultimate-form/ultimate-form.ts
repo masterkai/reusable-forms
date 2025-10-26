@@ -16,6 +16,7 @@ const defaultFieldConfigsValues = {
 	styleUrl: './ultimate-form.css',
 })
 export class UltimateForm implements OnInit {
+	incorrectField = signal<string[]>([])
 	fields = input.required<(FieldConfig | string)[]>();
 	fieldValues = signal<{ [key: string]: any }>({})
 	fieldConfigs = computed(() => {
@@ -58,8 +59,9 @@ export class UltimateForm implements OnInit {
 			for (let validationFn of field.validationFns || []) {
 				const isValid = validationFn(this.fieldValues()[field.name]);
 				if (!isValid) {
-					alert(`Field "${ field.displayName }" is invalid.`);
-					return;
+					this.incorrectField.update(
+						prev => prev.includes(field.displayName) ? prev : [ ...prev, field.displayName ]
+					)
 				}
 			}
 			console.log('Submitting Form with values:', this.fieldValues());
