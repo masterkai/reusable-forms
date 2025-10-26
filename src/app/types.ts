@@ -3,5 +3,5 @@ export interface FieldConfig {
 	displayName?: string;
 	type?: string;
 	hint?: string;
-	validationFns?: Function[];
+	validationFns?: ((value: any) => boolean)[];
 }

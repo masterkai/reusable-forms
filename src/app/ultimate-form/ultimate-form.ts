@@ -54,6 +54,15 @@ export class UltimateForm implements OnInit {
 	}
 
 	submitForm() {
-		console.log('Submitting Form with values:', this.fieldValues());
+		for (let field of this.fieldConfigs()) {
+			for (let validationFn of field.validationFns || []) {
+				const isValid = validationFn(this.fieldValues()[field.name]);
+				if (!isValid) {
+					alert(`Field "${ field.displayName }" is invalid.`);
+					return;
+				}
+			}
+			console.log('Submitting Form with values:', this.fieldValues());
+		}
 	}
 }

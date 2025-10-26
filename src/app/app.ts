@@ -3,15 +3,12 @@ import { FormsModule } from "@angular/forms";
 import { UltimateForm } from "./ultimate-form/ultimate-form";
 import { FieldConfig } from "./types";
 
-const isNotEmpty = (value: string) => value && value.trim().length > 0;
+const isNotEmpty = (value: string) => value.trim().length > 0;
 const isTwoCharsOrMore = (value: string) => isNotEmpty(value) && value.trim().length >= 2;
 const is21OrOlder = (value: string) => {
 	const age = Number(value);
 	return !isNaN(age) && age >= 21;
 }
-const isCharsOrMore = (minChars: number) => {
-	return (value: string) => isNotEmpty(value) && value.trim().length >= minChars;
-};
 
 @Component({
 	selector: 'app-root',
