@@ -12,17 +12,31 @@ const is21OrOlder = (value: string) => {
 
 @Component({
 	selector: 'app-root',
-	imports: [ FormsModule, UltimateForm ],
+	imports: [FormsModule, UltimateForm],
 	templateUrl: './app.html',
 	styleUrl: './app.css'
 })
 export class App {
 	formFields: (FieldConfig | string)[] = [
-		'name',
-		{ name: 'age', type: 'number', validationFns: [ is21OrOlder ] },
-		{ name: 'username', validationFns: [ isTwoCharsOrMore ] },
+		{ name: 'name', validators: [{ checkFn: isNotEmpty, errorMessage: 'Name cannot be empty.' }] },
+		{
+			name: 'age',
+			type: 'number',
+			validators: [{
+				checkFn: isNotEmpty, errorMessage: 'Age cannot be empty.'
+			}, { checkFn: is21OrOlder, errorMessage: 'You must be 21 years or older.' }]
+		},
 		{ name: 'email' },
-		{ name: 'password', displayName: 'Password', type: 'password', hint: 'Must be at least 8 characters long.' },
+		{
+			name: 'password',
+			displayName: 'Password',
+			type: 'password',
+			hint: 'Must be at least 8 characters long.',
+			validators: [{
+				checkFn: (value: string) => value.length >= 8,
+				errorMessage: 'Password must be at least 8 characters long.'
+			}]
+		},
 		{ name: 'myFavoriteColor', displayName: 'My Favorite Color' },
 	];
 

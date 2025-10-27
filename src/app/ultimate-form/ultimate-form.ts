@@ -56,10 +56,10 @@ export class UltimateForm implements OnInit {
 
 	submitForm() {
 		this.incorrectField.set([]);
-		
+
 		for (let field of this.fieldConfigs()) {
-			for (let validationFn of field.validationFns || []) {
-				const isValid = validationFn(this.fieldValues()[field.name]);
+			for (let { checkFn, errorMessage } of field.validators || []) {
+				const isValid = checkFn(this.fieldValues()[field.name]);
 				if (!isValid) {
 					this.incorrectField.update(
 						prev => prev.includes(field.displayName) ? prev : [...prev, field.displayName]

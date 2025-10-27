@@ -3,5 +3,5 @@ export interface FieldConfig {
 	displayName?: string;
 	type?: string;
 	hint?: string;
-	validationFns?: ((value: any) => boolean)[];
+	validators?: { checkFn: (value: any) => boolean; errorMessage: string }[];
 }
