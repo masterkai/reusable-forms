@@ -1,3 +1,6 @@
+@for (fieldName of incorrectField(); track fieldName) {
+    <p class="error">The field "{{ capitalizeFirstLetter(fieldName) }}" is incorrect. Please fix it.</p>
+}
 @for (field of fieldConfigs(); track field.name) {
     <label for="{{field}}">{{ capitalizeFirstLetter(field.displayName) }}:
         <input

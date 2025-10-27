@@ -55,6 +55,8 @@ export class UltimateForm implements OnInit {
 	}
 
 	submitForm() {
+		this.incorrectField.set([]);
+		
 		for (let field of this.fieldConfigs()) {
 			for (let validationFn of field.validationFns || []) {
 				const isValid = validationFn(this.fieldValues()[field.name]);
@@ -62,10 +64,13 @@ export class UltimateForm implements OnInit {
 					this.incorrectField.update(
 						prev => prev.includes(field.displayName) ? prev : [...prev, field.displayName]
 					)
+					break;
 				}
 			}
 		}
-
+		if (this.incorrectField().length > 0) {
+			return;
+		}
 		console.log('Submitting Form with values:', this.fieldValues());
 	}
 }
