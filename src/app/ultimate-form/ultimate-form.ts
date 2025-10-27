@@ -60,11 +60,12 @@ export class UltimateForm implements OnInit {
 				const isValid = validationFn(this.fieldValues()[field.name]);
 				if (!isValid) {
 					this.incorrectField.update(
-						prev => prev.includes(field.displayName) ? prev : [ ...prev, field.displayName ]
+						prev => prev.includes(field.displayName) ? prev : [...prev, field.displayName]
 					)
 				}
 			}
-			console.log('Submitting Form with values:', this.fieldValues());
 		}
+
+		console.log('Submitting Form with values:', this.fieldValues());
 	}
 }
