@@ -5,6 +5,7 @@ import { FieldConfig } from "../types";
 const defaultFieldConfigsValues = {
 	type: 'text',
 	hint: '',
+	validators: []
 }
 
 @Component({
@@ -58,7 +59,7 @@ export class UltimateForm implements OnInit {
 		this.incorrectField.set([]);
 
 		for (let field of this.fieldConfigs()) {
-			for (let { checkFn, errorMessage } of field.validators || []) {
+			for (let { checkFn, errorMessage } of field.validators) {
 				const isValid = checkFn(this.fieldValues()[field.name]);
 				if (!isValid) {
 					this.incorrectField.update(
