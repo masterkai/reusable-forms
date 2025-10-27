@@ -1,11 +1,11 @@
 import { Component, computed, input, OnInit, signal } from '@angular/core';
 import { FormsModule } from "@angular/forms";
-import { FieldConfig } from "../types";
+import { FieldConfig, Validator } from "../types";
 
 const defaultFieldConfigsValues = {
 	type: 'text',
 	hint: '',
-	validators: []
+	validators: <Validator[]>[]
 }
 
 @Component({
