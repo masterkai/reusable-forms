@@ -1,4 +1,4 @@
-import { Component, computed, input, OnInit, signal } from '@angular/core';
+import { Component, computed, input, OnInit, output, signal } from '@angular/core';
 import { FormsModule } from "@angular/forms";
 import { FieldConfig, Validator } from "../types";
 
@@ -33,6 +33,8 @@ export class UltimateForm implements OnInit {
 			}
 		});
 	})
+
+	submit = output<any>()
 
 	constructor() {
 	}
@@ -72,6 +74,6 @@ export class UltimateForm implements OnInit {
 		if (this.validationErrors().length > 0) {
 			return;
 		}
-		console.log('Submitting Form with values:', this.fieldValues());
+		this.submit.emit(this.fieldValues());
 	}
 }

@@ -1,1 +1,4 @@
-<app-ultimate-form [fields]="formFields"></app-ultimate-form>
+<app-ultimate-form
+        (submit)="onFormSubmit($event)"
+        [fields]="formFields"
+></app-ultimate-form>

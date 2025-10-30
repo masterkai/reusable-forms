@@ -41,4 +41,8 @@ export class App {
 	];
 
 	protected readonly title = signal('reusable-forms');
+
+	protected onFormSubmit($event: any) {
+		console.log('Form submitted with values:', $event);
+	}
 }
