@@ -1,4 +1,4 @@
-@for (error of validationErrors(); track error) {
+@for (error of fieldsValidationErrors(); track error) {
     <p class="error">{{ error }}</p>
 }
 @for (field of fieldConfigs(); track field.name) {
