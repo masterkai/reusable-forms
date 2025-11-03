@@ -13,7 +13,8 @@ export interface Validator {
 
 export interface MultiFieldValidator {
 	checkFn: (value: any) => boolean;
-	errorMessage: string
+	errorMessage: string;
+	fieldsInvolved: string[];
 }
 
 export enum ValidateOn {

@@ -1,16 +1,21 @@
-@for (error of fieldsValidationErrors(); track error) {
-    <p class="error">{{ error }}</p>
-}
 @for (field of fieldConfigs(); track field.name) {
     <label for="{{field}}">{{ capitalizeFirstLetter(field.displayName) }}:
         <input
                 (ngModelChange)="onFieldChange(field.name, $event)"
+                [class]="fieldsValidationErrors()[field.name] ? 'input-error' : ''"
                 [ngModel]="fieldValues()[field.name]"
                 [placeholder]="field.hint"
                 [type]="field.type"
                 id="{{field.name}}"
                 name="{{field.name}}"
         />
+        @if (fieldsValidationErrors()[field.name]) {
+            <span class="error-message">{{ fieldsValidationErrors()[field.name] }}</span>
+        }
     </label>
 }
-<button (click)="submitForm()">Submit</button>
+<button
+        (click)="submitForm()"
+        [disabled]="isSubmitting()"
+>Submit
+</button>

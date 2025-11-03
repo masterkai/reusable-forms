@@ -67,7 +67,14 @@ export class App {
 				isNotEmptyValidator
 			]
 		},
-		{ name: 'myFavoriteColor', displayName: 'My Favorite Color' },
+		{
+			name: 'myFavoriteColor',
+			displayName: 'My Favorite Color',
+			hint: 'Just type anything you like.',
+			validators: [
+				isNotEmptyValidator
+			]
+		},
 	];
 
 	protected readonly title = signal('reusable-forms');

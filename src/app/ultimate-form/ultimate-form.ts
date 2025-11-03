@@ -25,24 +25,42 @@ export class UltimateForm implements OnInit {
 	fieldValues = signal<{ [key: string]: any }>({})
 
 	fieldConfigs = computed(() => {
-		return this.fields().map(field => {
-			if (typeof field === 'string') {
-				return {
-					...defaultFieldConfigsValues,
-					name: field,
-					displayName: field,
-				};
-			} else {
-				return { ...defaultFieldConfigsValues, displayName: field.name, ...field };
-			}
-		});
+		return Array.isArray(this.fields()) ?
+			this.fields().map(field => {
+				if (typeof field === 'string') {
+					return {
+						...defaultFieldConfigsValues,
+						name: field,
+						displayName: field,
+					};
+				} else {
+					return { ...defaultFieldConfigsValues, displayName: field.name, ...field };
+				}
+			}) : [];
 	})
 
 
 	submit = output<any>()
+	protected readonly Object = Object;
 
 	constructor() {
 		effect(() => {
+			this.fieldsValidationErrors.set({});
+
+			for (let field of this.fieldConfigs()) {
+				for (let { checkFn, errorMessage } of [...(this.globalValidators() ?? []), ...field.validators]) {
+					const isValid = checkFn(this.fieldValues()[field.name]);
+					if (!isValid) {
+						this.fieldsValidationErrors.update(
+							prev => prev.hasOwnProperty(field.name) ? prev : ({
+								...prev,
+								[field.name]: errorMessage
+							})
+						)
+						break;
+					}
+				}
+			}
 			console.log('Current field values:', this.fieldValues())
 		})
 	}
@@ -69,13 +87,29 @@ export class UltimateForm implements OnInit {
 		this.fieldsValidationErrors.set({});
 
 		for (let field of this.fieldConfigs()) {
-			for (let { checkFn, errorMessage } of field.validators) {
+			for (let { checkFn, errorMessage } of [...(this.globalValidators() ?? []), ...field.validators]) {
 				const isValid = checkFn(this.fieldValues()[field.name]);
 				if (!isValid) {
 					this.fieldsValidationErrors.update(
-						prev => prev.includes(field.displayName) ? prev : [...prev, `${field.displayName}: ${errorMessage}`]
+						prev => prev.includes(field.name) ? prev : ({
+							...prev,
+							[field.name]: errorMessage
+						})
 					)
 					break;
+				}
+			}
+		}
+		for (let validator of this.multiFieldValidators() ?? []) {
+			const isValid = validator.checkFn(this.fieldValues());
+			if (!isValid) {
+				for (let fieldName of validator.fieldsInvolved) {
+					this.fieldsValidationErrors.update(
+						prev => ({
+							...prev,
+							[fieldName]: validator.errorMessage
+						})
+					)
 				}
 			}
 		}
@@ -84,4 +118,10 @@ export class UltimateForm implements OnInit {
 		}
 		this.submit.emit(this.fieldValues());
 	}
+
+	protected isSubmitting() {
+		return !(Object.entries(this.fieldsValidationErrors()).length === 0);
+	}
 }
+
+
