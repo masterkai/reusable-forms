@@ -1,4 +1,4 @@
-import { Component, computed, input, OnInit, output, signal } from '@angular/core';
+import { Component, computed, input, OnInit,effect, output, signal } from '@angular/core';
 import { FormsModule } from "@angular/forms";
 import { FieldConfig, Validator } from "../types";
 
@@ -17,9 +17,13 @@ const defaultFieldConfigsValues = {
 	styleUrl: './ultimate-form.css',
 })
 export class UltimateForm implements OnInit {
-	validationErrors = signal<string[]>([])
+	validateOn =  input.required<'submit' | 'change'>()
+	globalValidators = input<Validator[]>()
+	multiFieldValidators = input<{ fields: string[], validator: Validator }[]>()
+	fieldsValidationErrors = signal<any>({ });
 	fields = input.required<(FieldConfig | string)[]>();
 	fieldValues = signal<{ [key: string]: any }>({})
+
 	fieldConfigs = computed(() => {
 		return this.fields().map(field => {
 			if (typeof field === 'string') {
@@ -34,9 +38,14 @@ export class UltimateForm implements OnInit {
 		});
 	})
 
+
+
 	submit = output<any>()
 
 	constructor() {
+		effect(() => {
+			console.log('Current field values:', this.fieldValues())
+		})
 	}
 
 	capitalizeFirstLetter(str: string): string {
@@ -58,20 +67,20 @@ export class UltimateForm implements OnInit {
 	}
 
 	submitForm() {
-		this.validationErrors.set([]);
+		this.fieldsValidationErrors.set({});
 
 		for (let field of this.fieldConfigs()) {
 			for (let { checkFn, errorMessage } of field.validators) {
 				const isValid = checkFn(this.fieldValues()[field.name]);
 				if (!isValid) {
-					this.validationErrors.update(
+					this.fieldsValidationErrors.update(
 						prev => prev.includes(field.displayName) ? prev : [...prev, `${field.displayName}: ${errorMessage}`]
 					)
 					break;
 				}
 			}
 		}
-		if (this.validationErrors().length > 0) {
+		if (this.fieldsValidationErrors().length > 0) {
 			return;
 		}
 		this.submit.emit(this.fieldValues());
