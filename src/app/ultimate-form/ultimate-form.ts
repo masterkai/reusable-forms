@@ -1,6 +1,6 @@
-import { Component, computed, input, OnInit,effect, output, signal } from '@angular/core';
+import { Component, computed, effect, input, OnInit, output, signal } from '@angular/core';
 import { FormsModule } from "@angular/forms";
-import { FieldConfig, Validator } from "../types";
+import { FieldConfig, MultiFieldValidator, ValidateOn, Validator } from "../types";
 
 const defaultFieldConfigsValues = {
 	type: 'text',
@@ -17,10 +17,10 @@ const defaultFieldConfigsValues = {
 	styleUrl: './ultimate-form.css',
 })
 export class UltimateForm implements OnInit {
-	validateOn =  input.required<'submit' | 'change'>()
+	validateOn = input.required<ValidateOn>()
 	globalValidators = input<Validator[]>()
-	multiFieldValidators = input<{ fields: string[], validator: Validator }[]>()
-	fieldsValidationErrors = signal<any>({ });
+	multiFieldValidators = input<MultiFieldValidator[]>()
+	fieldsValidationErrors = signal<any>({});
 	fields = input.required<(FieldConfig | string)[]>();
 	fieldValues = signal<{ [key: string]: any }>({})
 
@@ -37,7 +37,6 @@ export class UltimateForm implements OnInit {
 			}
 		});
 	})
-
 
 
 	submit = output<any>()

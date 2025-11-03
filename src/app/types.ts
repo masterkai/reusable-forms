@@ -15,3 +15,8 @@ export interface MultiFieldValidator {
 	checkFn: (value: any) => boolean;
 	errorMessage: string
 }
+
+export enum ValidateOn {
+	Submit = 'submit',
+	Change = 'change'
+}

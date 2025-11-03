@@ -1,7 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { FormsModule } from "@angular/forms";
 import { UltimateForm } from "./ultimate-form/ultimate-form";
-import { FieldConfig } from "./types";
+import { FieldConfig, ValidateOn } from "./types";
 import {
 	createMinLengthValidator,
 	createMinValueValidator,
@@ -26,6 +26,7 @@ const is21OrOlder = (value: string) => {
 	styleUrl: './app.css'
 })
 export class App {
+	validateOn = ValidateOn;
 	formFields: (FieldConfig | string)[] = [
 		{
 			name: 'name', validators: [
