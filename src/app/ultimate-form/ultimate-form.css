@@ -17,7 +17,7 @@ label {
 }
 
 input {
-    padding: 8px;
+    padding: 16px;
     font-size: 1rem;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -34,7 +34,7 @@ input:focus {
 }
 
 button {
-    padding: 10px 15px;
+    padding: 16px;
     font-size: 1em;
     color: #fff;
     background-color: #007bff;
