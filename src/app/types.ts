@@ -10,3 +10,8 @@ export interface Validator {
 	checkFn: (value: any) => boolean;
 	errorMessage: string
 }
+
+export interface MultiFieldValidator {
+	checkFn: (value: any) => boolean;
+	errorMessage: string
+}
