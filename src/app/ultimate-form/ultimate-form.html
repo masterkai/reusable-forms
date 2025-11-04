@@ -17,6 +17,6 @@
 }
 <button
         (click)="submitForm()"
-        [disabled]="isSubmitting()"
+        [disabled]="!allFieldsHasValue() || hasValidationErrors()"
 >Submit
 </button>

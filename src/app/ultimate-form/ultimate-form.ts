@@ -22,7 +22,7 @@ export class UltimateForm implements OnInit {
 	multiFieldValidators = input<MultiFieldValidator[]>()
 	fieldsValidationErrors = signal<any>({});
 	fields = input.required<(FieldConfig | string)[]>();
-	fieldValues = signal<{ [key: string]: any }>({})
+	fieldValues = signal<{ [key: string]: any }>({});
 
 	fieldConfigs = computed(() => {
 		return Array.isArray(this.fields()) ?
@@ -39,33 +39,28 @@ export class UltimateForm implements OnInit {
 			}) : [];
 	})
 
+	allFieldsHasValue = computed(() => {
+		for (let field of this.fieldConfigs()) {
+			if (!this.fieldValues()[field.name] || this.fieldValues()[field.name].toString().trim() === '') {
+				return false;
+			}
+		}
+		return true;
+	})
+
 	fieldHasBeenTouched = signal<{ [key: string]: boolean }>({});
 
 
 	submit = output<any>()
-	protected readonly Object = Object;
+	hasValidationErrors = computed(() => {
+		return Object.entries(this.fieldsValidationErrors()).length > 0;
+	})
 
 	constructor() {
 		effect(() => {
-			this.fieldsValidationErrors.set({});
-
-			for (let field of this.fieldConfigs()) {
-				if (this.fieldHasBeenTouched()[field.name]) {
-					for (let { checkFn, errorMessage } of [...(this.globalValidators() ?? []), ...field.validators]) {
-						const isValid = checkFn(this.fieldValues()[field.name]);
-						if (!isValid) {
-							this.fieldsValidationErrors.update(
-								prev => prev.hasOwnProperty(field.name) ? prev : ({
-									...prev,
-									[field.name]: errorMessage
-								})
-							)
-							break;
-						}
-					}
-				}
-			}
-			console.log('Current field values:', this.fieldValues())
+			if (this.validateOn() === ValidateOn.Change)
+				this.fieldsValidationErrors.set(this.getValidationErrors(false));
+			this.fieldValues()
 		})
 	}
 
@@ -84,47 +79,44 @@ export class UltimateForm implements OnInit {
 			...prev,
 			[field]: $event
 		}))
-
 	}
 
-	submitForm() {
-		this.fieldsValidationErrors.set({});
-
+	getValidationErrors(isSubmit: boolean) {
+		let errors: { [key: string]: string } = {};
 		for (let field of this.fieldConfigs()) {
-			for (let { checkFn, errorMessage } of [...(this.globalValidators() ?? []), ...field.validators]) {
-				const isValid = checkFn(this.fieldValues()[field.name]);
+			if (this.fieldHasBeenTouched()[field.name] || isSubmit) {
+				for (let { checkFn, errorMessage } of [...(this.globalValidators() ?? []), ...field.validators]) {
+					const isValid = checkFn(this.fieldValues()[field.name]);
+					if (!isValid) {
+						errors[field.name] = errorMessage;
+						break;
+					}
+				}
+			}
+
+		}
+		for (let validator of this.multiFieldValidators() ?? []) {
+			if (validator.fieldsInvolved.every(fieldName => this.fieldHasBeenTouched()[fieldName]) || isSubmit) {
+				const isValid = validator.checkFn(this.fieldValues());
 				if (!isValid) {
-					this.fieldsValidationErrors.update(
-						prev => prev.includes(field.name) ? prev : ({
-							...prev,
-							[field.name]: errorMessage
-						})
-					)
+					for (let fieldName of validator.fieldsInvolved) {
+						errors[fieldName] = validator.errorMessage;
+					}
 					break;
 				}
 			}
+
 		}
-		for (let validator of this.multiFieldValidators() ?? []) {
-			const isValid = validator.checkFn(this.fieldValues());
-			if (!isValid) {
-				for (let fieldName of validator.fieldsInvolved) {
-					this.fieldsValidationErrors.update(
-						prev => ({
-							...prev,
-							[fieldName]: validator.errorMessage
-						})
-					)
-				}
-			}
-		}
+		return errors;
+	}
+
+	submitForm() {
+		this.fieldsValidationErrors.set(this.getValidationErrors(true));
+
 		if (this.fieldsValidationErrors().length > 0) {
 			return;
 		}
 		this.submit.emit(this.fieldValues());
-	}
-
-	protected isSubmitting() {
-		return !(Object.entries(this.fieldsValidationErrors()).length === 0);
 	}
 
 	protected setFieldToBeEdited(fieldName: string) {
@@ -134,6 +126,8 @@ export class UltimateForm implements OnInit {
 				[fieldName]: true
 			})
 		)
+		if (this.validateOn() === ValidateOn.Change)
+			this.fieldsValidationErrors.set(this.getValidationErrors(false));
 	}
 }
 
