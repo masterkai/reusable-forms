@@ -1,6 +1,7 @@
 @for (field of fieldConfigs(); track field.name) {
     <label for="{{field}}">{{ capitalizeFirstLetter(field.displayName) }}:
         <input
+                (blur)="setFieldToBeEdited(field.name)"
                 (ngModelChange)="onFieldChange(field.name, $event)"
                 [class]="fieldsValidationErrors()[field.name] ? 'input-error' : ''"
                 [ngModel]="fieldValues()[field.name]"

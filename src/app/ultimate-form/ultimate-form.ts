@@ -39,6 +39,8 @@ export class UltimateForm implements OnInit {
 			}) : [];
 	})
 
+	fieldHasBeenTouched = signal<{ [key: string]: boolean }>({});
+
 
 	submit = output<any>()
 	protected readonly Object = Object;
@@ -48,16 +50,18 @@ export class UltimateForm implements OnInit {
 			this.fieldsValidationErrors.set({});
 
 			for (let field of this.fieldConfigs()) {
-				for (let { checkFn, errorMessage } of [...(this.globalValidators() ?? []), ...field.validators]) {
-					const isValid = checkFn(this.fieldValues()[field.name]);
-					if (!isValid) {
-						this.fieldsValidationErrors.update(
-							prev => prev.hasOwnProperty(field.name) ? prev : ({
-								...prev,
-								[field.name]: errorMessage
-							})
-						)
-						break;
+				if (this.fieldHasBeenTouched()[field.name]) {
+					for (let { checkFn, errorMessage } of [...(this.globalValidators() ?? []), ...field.validators]) {
+						const isValid = checkFn(this.fieldValues()[field.name]);
+						if (!isValid) {
+							this.fieldsValidationErrors.update(
+								prev => prev.hasOwnProperty(field.name) ? prev : ({
+									...prev,
+									[field.name]: errorMessage
+								})
+							)
+							break;
+						}
 					}
 				}
 			}
@@ -121,6 +125,15 @@ export class UltimateForm implements OnInit {
 
 	protected isSubmitting() {
 		return !(Object.entries(this.fieldsValidationErrors()).length === 0);
+	}
+
+	protected setFieldToBeEdited(fieldName: string) {
+		this.fieldHasBeenTouched.update(
+			prev => ({
+				...prev,
+				[fieldName]: true
+			})
+		)
 	}
 }
 

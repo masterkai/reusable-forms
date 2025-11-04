@@ -3,12 +3,12 @@ import { FormsModule } from "@angular/forms";
 import { UltimateForm } from "./ultimate-form/ultimate-form";
 import { FieldConfig, ValidateOn } from "./types";
 import {
-	createMinLengthValidator,
 	createMinValueValidator,
 	createRegexValidator,
 	datePattern,
 	isEmailValidator,
 	isNotEmptyValidator,
+	isTwoCharsOrMoreValidator,
 	timePattern
 } from "./validators";
 
@@ -30,7 +30,8 @@ export class App {
 	formFields: (FieldConfig | string)[] = [
 		{
 			name: 'name', validators: [
-				isNotEmptyValidator, createMinLengthValidator(2)
+				isNotEmptyValidator,
+				isTwoCharsOrMoreValidator
 			]
 		},
 		{
