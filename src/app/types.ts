@@ -3,6 +3,7 @@ export interface FieldConfig {
 	displayName?: string;
 	type?: string;
 	hint?: string;
+	options?: string[];
 	validators?: Validator[];
 }
 
