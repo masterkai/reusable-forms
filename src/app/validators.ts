@@ -1,3 +1,5 @@
+import { MultiFieldValidator } from "./types";
+
 const isNotEmpty = (value: string) => value.trim().length > 0;
 const isTwoCharsOrMore = (value: string) => isNotEmpty(value) && value.trim().length >= 2;
 const is21OrOlder = (value: string) => {
@@ -43,3 +45,14 @@ export const createMinValueValidator = (minValue: number) => ({
 	checkFn: createMinValueCheck(minValue),
 	errorMessage: `Field must be ${minValue} or over.`
 })
+
+export function fieldsMatchValidator(fieldA: { name: string }, fieldB: { name: string }): MultiFieldValidator {
+
+	return {
+		checkFn: (values: { [key: string]: any }) => values[fieldA.name] === values[fieldB.name],
+		errorMessage: `${fieldA.name} and ${fieldB.name} must match.`,
+		fieldsInvolved: [fieldA.name, fieldB.name]
+	};
+
+
+}

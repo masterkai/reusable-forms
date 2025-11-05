@@ -1,11 +1,12 @@
 import { Component, signal } from '@angular/core';
 import { FormsModule } from "@angular/forms";
 import { UltimateForm } from "./ultimate-form/ultimate-form";
-import { FieldConfig, ValidateOn } from "./types";
+import { FieldConfig, MultiFieldValidator, ValidateOn, Validator } from "./types";
 import {
 	createMinValueValidator,
 	createRegexValidator,
 	datePattern,
+	fieldsMatchValidator,
 	isEmailValidator,
 	isNotEmptyValidator,
 	isTwoCharsOrMoreValidator,
@@ -26,6 +27,20 @@ const is21OrOlder = (value: string) => {
 	styleUrl: './app.css'
 })
 export class App {
+	passwordFieldConfig: FieldConfig = {
+		name: 'password',
+		displayName: 'Password',
+		type: 'password',
+		hint: 'Must be at least 8 characters long.',
+	}
+	confirmPasswordFieldConfig: FieldConfig = {
+		name: 'confirmPassword',
+		displayName: 'Confirm Password',
+		type: 'password',
+		hint: 'Must match the password entered above.',
+	}
+	globalValidators: Validator[] = [isNotEmptyValidator]
+	multiFieldValidators: MultiFieldValidator[] = [fieldsMatchValidator(this.passwordFieldConfig, this.confirmPasswordFieldConfig)];
 	validateOn = ValidateOn;
 	formFields: (FieldConfig | string)[] = [
 		{
@@ -65,7 +80,16 @@ export class App {
 			type: 'password',
 			hint: 'Must be at least 8 characters long.',
 			validators: [
-				isNotEmptyValidator
+				isNotEmptyValidator, ...this.multiFieldValidators
+			]
+		},
+		{
+			name: 'confirmPassword',
+			displayName: 'Confirm Password',
+			type: 'password',
+			hint: 'Must match the password entered above.',
+			validators: [
+				isNotEmptyValidator, ...this.multiFieldValidators
 			]
 		},
 		{
