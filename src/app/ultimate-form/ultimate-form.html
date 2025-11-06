@@ -2,7 +2,7 @@
     @if (field.type === 'text') {
         <app-text-input
                 (blur)="setFieldToBeEdited(field.name)"
-                (change)="onFieldChange(field.name, $event)"
+                (modify)="onFieldChange(field.name, $event)"
                 [class]="fieldsValidationErrors()[field.name] ? 'input-error' : ''"
                 [displayName]="field.displayName"
                 [error]="fieldsValidationErrors()[field.name]"

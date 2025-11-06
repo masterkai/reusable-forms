@@ -15,7 +15,7 @@ export class TextInput {
 	error = input.required<string | null>();
 	value = input.required<string>();
 	hint = input.required<string>();
-	change = output<string>()
+	modify = output<string>()
 	blur = output<void>()
 	protected readonly HTMLInputElement = HTMLInputElement;
 
@@ -25,7 +25,7 @@ export class TextInput {
 
 	valueChanged(event: any) {
 		const value = event.target.value;
-		this.change.emit(value);
+		this.modify.emit(value);
 	}
 
 	blurred() {
