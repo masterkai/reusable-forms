@@ -1,1 +1,15 @@
-<p>text-input works!</p>
+<label>{{ displayName() || capitalizeFirstLetter(name()) }}:
+    <input
+            (blur)="blurred()"
+            (input)="valueChanged($event)"
+            [class]="error() ? 'input-error' : ''"
+            [placeholder]="hint()"
+            [value]="value()"
+            id="{{name()}}"
+            name="{{name()}}"
+            type="text"
+    />
+    @if (error()) {
+        <span class="error-message">{{ error() }}</span>
+    }
+</label>

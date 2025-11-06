@@ -1,19 +1,18 @@
 @for (field of fieldConfigs(); track field.name) {
-    <label for="{{field}}">{{ capitalizeFirstLetter(field.displayName) }}:
-        <input
+    @if (field.type === 'text') {
+        <app-text-input
                 (blur)="setFieldToBeEdited(field.name)"
-                (ngModelChange)="onFieldChange(field.name, $event)"
+                (change)="onFieldChange(field.name, $event)"
                 [class]="fieldsValidationErrors()[field.name] ? 'input-error' : ''"
-                [ngModel]="fieldValues()[field.name]"
-                [placeholder]="field.hint"
-                [type]="field.type"
-                id="{{field.name}}"
-                name="{{field.name}}"
+                [displayName]="field.displayName"
+                [error]="fieldsValidationErrors()[field.name]"
+                [hint]="field.hint"
+                [name]="field.name"
+                [value]="fieldValues()[field.name]"
         />
-        @if (fieldsValidationErrors()[field.name]) {
-            <span class="error-message">{{ fieldsValidationErrors()[field.name] }}</span>
-        }
-    </label>
+    }
+
+
 }
 <button
         (click)="submitForm()"

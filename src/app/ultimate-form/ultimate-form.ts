@@ -1,6 +1,7 @@
 import { Component, computed, effect, input, OnInit, output, signal } from '@angular/core';
 import { FormsModule } from "@angular/forms";
 import { FieldConfig, MultiFieldValidator, ValidateOn, Validator } from "../types";
+import { TextInput } from "../text-input/text-input";
 
 const defaultFieldConfigsValues = {
 	type: 'text',
@@ -11,7 +12,8 @@ const defaultFieldConfigsValues = {
 @Component({
 	selector: 'app-ultimate-form',
 	imports: [
-		FormsModule
+		FormsModule,
+		TextInput
 	],
 	templateUrl: './ultimate-form.html',
 	styleUrl: './ultimate-form.css',
@@ -85,7 +87,7 @@ export class UltimateForm implements OnInit {
 		let errors: { [key: string]: string } = {};
 		for (let field of this.fieldConfigs()) {
 			if (this.fieldHasBeenTouched()[field.name] || isSubmit) {
-				for (let { checkFn, errorMessage } of [...(this.globalValidators() ?? []), ...field.validators]) {
+				for (let { checkFn, errorMessage } of [ ...(this.globalValidators() ?? []), ...field.validators ]) {
 					const isValid = checkFn(this.fieldValues()[field.name]);
 					if (!isValid) {
 						errors[field.name] = errorMessage;
