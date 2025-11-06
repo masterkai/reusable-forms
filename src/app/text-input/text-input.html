@@ -3,10 +3,9 @@
             (blur)="blurred()"
             (input)="valueChanged($event)"
             [class]="error() ? 'input-error' : ''"
+            [name]="name()"
             [placeholder]="hint()"
             [value]="value()"
-            id="{{name()}}"
-            name="{{name()}}"
             type="text"
     />
     @if (error()) {

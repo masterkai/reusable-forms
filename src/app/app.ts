@@ -44,7 +44,8 @@ export class App {
 	validateOn = ValidateOn;
 	formFields: (FieldConfig | string)[] = [
 		{
-			name: 'name', validators: [
+			name: 'name',
+			validators: [
 				isNotEmptyValidator,
 				isTwoCharsOrMoreValidator
 			]
