@@ -34,5 +34,5 @@ input:focus {
 }
 
 :host {
-    flex-basis: var(--column-width);
+    flex-basis: var(--column-width, 100%);
 }

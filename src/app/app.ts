@@ -136,7 +136,7 @@ export class App {
 		{
 			name: 'phoneNumber',
 			validators: [ isNotEmptyValidator, isTwoCharsOrMoreValidator ],
-			width: '395px'
+			width: '100%'
 		},
 		{
 			name: 'extensionNumber',
