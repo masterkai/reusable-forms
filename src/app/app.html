@@ -1,7 +1,9 @@
 <app-ultimate-form
         (submit)="onFormSubmit($event)"
         [fields]="formFields"
+        [flexDirection]="'row'"
         [globalValidators]="globalValidators"
         [multiFieldValidators]="multiFieldValidators"
         [validateOn]="validateOn.Change"
+        containerWidth="100%"
 ></app-ultimate-form>

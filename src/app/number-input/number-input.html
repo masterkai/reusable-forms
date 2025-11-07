@@ -1,1 +1,14 @@
-<p>number-input works!</p>
+<label>{{ displayName() || capitalizeFirstLetter(name()) }}:
+    <input
+            (blur)="blurred()"
+            (input)="valueChanged($event)"
+            [class]="error() ? 'input-error' : ''"
+            [name]="name()"
+            [placeholder]="hint()"
+            [value]="value()"
+            type="number"
+    />
+    @if (error()) {
+        <span class="error-message">{{ error() }}</span>
+    }
+</label>

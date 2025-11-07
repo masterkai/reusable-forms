@@ -2,6 +2,8 @@ import { Component, computed, effect, input, OnInit, output, signal } from '@ang
 import { FormsModule } from "@angular/forms";
 import { FieldConfig, MultiFieldValidator, ValidateOn, Validator } from "../types";
 import { TextInput } from "../text-input/text-input";
+import { PasswordInput } from "../password-input/password-input";
+import { NumberInput } from "../number-input/number-input";
 
 const defaultFieldConfigsValues = {
 	type: 'text',
@@ -13,12 +15,16 @@ const defaultFieldConfigsValues = {
 	selector: 'app-ultimate-form',
 	imports: [
 		FormsModule,
-		TextInput
+		TextInput,
+		PasswordInput,
+		NumberInput
 	],
 	templateUrl: './ultimate-form.html',
 	styleUrl: './ultimate-form.css',
 })
 export class UltimateForm implements OnInit {
+	flexDirection = input<'row' | 'column'>('column');
+	containerWidth = input<string>('400px');
 	validateOn = input.required<ValidateOn>()
 	globalValidators = input<Validator[]>()
 	multiFieldValidators = input<MultiFieldValidator[]>()
