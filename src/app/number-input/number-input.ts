@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { Component, HostBinding, Input, input, output } from '@angular/core';
 
 @Component({
 	selector: 'app-number-input',
@@ -7,7 +7,7 @@ import { Component, input, output } from '@angular/core';
 	styleUrl: './number-input.css',
 })
 export class NumberInput {
-	columnWidth = input<string>('100%');
+	@HostBinding('style.--column-width') @Input() columnWidth = '100%';
 	isDisplayNameVisible = input.required<boolean>();
 	name = input.required<string>();
 	displayName = input.required<string>();
