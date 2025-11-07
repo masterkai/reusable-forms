@@ -23,8 +23,11 @@ const defaultFieldConfigsValues = {
 	styleUrl: './ultimate-form.css',
 })
 export class UltimateForm implements OnInit {
+	isButtonVisible = input.required<boolean>();
+	isDisplayNameVisible = input.required<boolean>();
 	flexDirection = input<'row' | 'column'>('column');
 	containerWidth = input<string>('100%');
+	gapBetweenFields = input<string>('16px');
 	validateOn = input.required<ValidateOn>()
 	globalValidators = input<Validator[]>()
 	multiFieldValidators = input<MultiFieldValidator[]>()
@@ -68,12 +71,9 @@ export class UltimateForm implements OnInit {
 		effect(() => {
 			if (this.validateOn() === ValidateOn.Change)
 				this.fieldsValidationErrors.set(this.getValidationErrors(false));
+			this.submit.emit(this.fieldValues());
 			this.fieldValues()
 		})
-	}
-
-	capitalizeFirstLetter(str: string): string {
-		return str.charAt(0).toUpperCase() + str.slice(1);
 	}
 
 	ngOnInit() {

@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { Component, HostBinding, Input, input, output } from '@angular/core';
 import { FormsModule } from "@angular/forms";
 
 @Component({
@@ -10,6 +10,8 @@ import { FormsModule } from "@angular/forms";
 	styleUrl: './text-input.css',
 })
 export class TextInput {
+	@HostBinding('style.--column-width') @Input() columnWidth = '100%';
+	isDisplayNameVisible = input<boolean>(true);
 	name = input.required<string>();
 	displayName = input.required<string>();
 	error = input.required<string | null>();

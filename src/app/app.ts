@@ -122,6 +122,28 @@ export class App {
 			]
 		},
 	];
+	formFields2: (FieldConfig | string)[] = [
+		{
+			name: 'countryCode',
+			validators: [ isNotEmptyValidator, isTwoCharsOrMoreValidator ],
+			width: '70px'
+		},
+		{
+			name: 'areaCode',
+			validators: [ isNotEmptyValidator, isTwoCharsOrMoreValidator ],
+			width: '60px'
+		},
+		{
+			name: 'phoneNumber',
+			validators: [ isNotEmptyValidator, isTwoCharsOrMoreValidator ],
+			width: '395px'
+		},
+		{
+			name: 'extensionNumber',
+			validators: [ isNotEmptyValidator, isTwoCharsOrMoreValidator ],
+			width: '130px'
+		},
+	];
 
 	protected readonly title = signal('reusable-forms');
 

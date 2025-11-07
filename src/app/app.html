@@ -1,8 +1,22 @@
+<!--<app-ultimate-form-->
+<!--        (submit)="onFormSubmit($event)"-->
+<!--        [fields]="formFields"-->
+<!--        [flexDirection]="'row'"-->
+<!--        [globalValidators]="globalValidators"-->
+<!--        [isButtonVisible]="false"-->
+<!--        [isDisplayNameVisible]="true"-->
+<!--        [multiFieldValidators]="multiFieldValidators"-->
+<!--        [validateOn]="validateOn.Change"-->
+<!--/>-->
+
 <app-ultimate-form
         (submit)="onFormSubmit($event)"
-        [fields]="formFields"
+        [fields]="formFields2"
         [flexDirection]="'row'"
+        [gapBetweenFields]="'8px'"
         [globalValidators]="globalValidators"
+        [isButtonVisible]="false"
+        [isDisplayNameVisible]="false"
         [multiFieldValidators]="multiFieldValidators"
         [validateOn]="validateOn.Change"
-></app-ultimate-form>
+/>

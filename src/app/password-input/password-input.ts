@@ -7,6 +7,8 @@ import { Component, input, output } from '@angular/core';
 	styleUrl: './password-input.css',
 })
 export class PasswordInput {
+	columnWidth = input<string>('100%');
+	isDisplayNameVisible = input<boolean>(true);
 	name = input.required<string>();
 	displayName = input.required<string>();
 	error = input.required<string | null>();
