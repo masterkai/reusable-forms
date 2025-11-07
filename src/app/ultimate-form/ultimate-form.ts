@@ -24,7 +24,7 @@ const defaultFieldConfigsValues = {
 })
 export class UltimateForm implements OnInit {
 	flexDirection = input<'row' | 'column'>('column');
-	containerWidth = input<string>('400px');
+	containerWidth = input<string>('100%');
 	validateOn = input.required<ValidateOn>()
 	globalValidators = input<Validator[]>()
 	multiFieldValidators = input<MultiFieldValidator[]>()
