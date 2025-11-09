@@ -1,0 +1,14 @@
+<label [style]="{ width:columnWidth }">{{ isDisplayNameVisible() ? (displayName() || capitalizeFirstLetter(name())) : null }}
+    <input
+            (blur)="blurred()"
+            (input)="valueChanged($event)"
+            [class]="error() ? 'input-error' : ''"
+            [name]="name()"
+            [placeholder]="hint()"
+            [value]="value()"
+            type="text"
+    />
+    @if (error()) {
+        <span class="error-message">{{ error() }}</span>
+    }
+</label>

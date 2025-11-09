@@ -1,0 +1,38 @@
+.error-message {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 5px;
+}
+
+.input-error {
+    border: 1px solid red;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+input {
+    padding: 16px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+input::placeholder {
+    color: #aaa;
+}
+
+input:focus {
+    border-color: #66afe9;
+    outline: none;
+    box-shadow: 0 0 5px rgba(102, 175, 233, 0.6);
+}
+
+:host {
+    flex-basis: var(--column-width);
+}

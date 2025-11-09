@@ -1,22 +1,61 @@
-@for (field of fieldConfigs(); track field.name) {
-    <label for="{{field}}">{{ capitalizeFirstLetter(field.displayName) }}:
-        <input
-                (blur)="setFieldToBeEdited(field.name)"
-                (ngModelChange)="onFieldChange(field.name, $event)"
-                [class]="fieldsValidationErrors()[field.name] ? 'input-error' : ''"
-                [ngModel]="fieldValues()[field.name]"
-                [placeholder]="field.hint"
-                [type]="field.type"
-                id="{{field.name}}"
-                name="{{field.name}}"
-        />
-        @if (fieldsValidationErrors()[field.name]) {
-            <span class="error-message">{{ fieldsValidationErrors()[field.name] }}</span>
+<div
+        [class]="flexDirection()==='column'?
+        'ultimate-form-container ultimate-form-container--column':
+        'ultimate-form-container ultimate-form-container--row'"
+        [style]="{'max-width': containerWidth(),'gap': gapBetweenFields()}"
+>
+    @for (field of fieldConfigs(); track field.name) {
+        @if (field.type === 'text') {
+            <app-text-input
+                    (blur)="setFieldToBeEdited(field.name)"
+                    (modify)="onFieldChange(field.name, $event)"
+                    [class]="fieldsValidationErrors()[field.name] ? 'input-error' : ''"
+                    [columnWidth]="field.width ?? ''"
+                    [displayName]="field.displayName"
+                    [error]="fieldsValidationErrors()[field.name]"
+                    [hint]="field.hint"
+                    [isDisplayNameVisible]="isDisplayNameVisible()"
+                    [name]="field.name"
+                    [value]="fieldValues()[field.name]"
+            />
         }
-    </label>
-}
-<button
-        (click)="submitForm()"
-        [disabled]="!allFieldsHasValue() || hasValidationErrors()"
->Submit
-</button>
+        @if (field.type === 'password') {
+            <app-password-input
+                    (blur)="setFieldToBeEdited(field.name)"
+                    (modify)="onFieldChange(field.name, $event)"
+                    [class]="fieldsValidationErrors()[field.name] ? 'input-error' : ''"
+                    [columnWidth]="field.width ?? ''"
+                    [displayName]="field.displayName"
+                    [error]="fieldsValidationErrors()[field.name]"
+                    [hint]="field.hint"
+                    [isDisplayNameVisible]="isDisplayNameVisible()"
+                    [name]="field.name"
+                    [value]="fieldValues()[field.name]"
+            />
+        }
+        @if (field.type === 'number') {
+            <app-number-input
+                    (blur)="setFieldToBeEdited(field.name)"
+                    (modify)="onFieldChange(field.name, $event)"
+                    [class]="fieldsValidationErrors()[field.name] ? 'input-error' : ''"
+                    [columnWidth]="field.width ?? ''"
+                    [displayName]="field.displayName"
+                    [error]="fieldsValidationErrors()[field.name]"
+                    [hint]="field.hint"
+                    [isDisplayNameVisible]="isDisplayNameVisible()"
+                    [name]="field.name"
+                    [value]="fieldValues()[field.name]"
+            />
+        }
+
+
+    }
+    @if (isButtonVisible()) {
+        <button
+                (click)="submitForm()"
+                [disabled]="!allFieldsHasValue() || hasValidationErrors()"
+        >Submit
+        </button>
+    }
+
+</div>

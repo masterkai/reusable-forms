@@ -44,7 +44,8 @@ export class App {
 	validateOn = ValidateOn;
 	formFields: (FieldConfig | string)[] = [
 		{
-			name: 'name', validators: [
+			name: 'name',
+			validators: [
 				isNotEmptyValidator,
 				isTwoCharsOrMoreValidator
 			]
@@ -119,6 +120,28 @@ export class App {
 			validators: [
 				isNotEmptyValidator
 			]
+		},
+	];
+	formFields2: (FieldConfig | string)[] = [
+		{
+			name: 'countryCode',
+			validators: [ isNotEmptyValidator, isTwoCharsOrMoreValidator ],
+			width: '70px'
+		},
+		{
+			name: 'areaCode',
+			validators: [ isNotEmptyValidator, isTwoCharsOrMoreValidator ],
+			width: '60px'
+		},
+		{
+			name: 'phoneNumber',
+			validators: [ isNotEmptyValidator, isTwoCharsOrMoreValidator ],
+			width: '100%'
+		},
+		{
+			name: 'extensionNumber',
+			validators: [ isNotEmptyValidator, isTwoCharsOrMoreValidator ],
+			width: '130px'
 		},
 	];
 

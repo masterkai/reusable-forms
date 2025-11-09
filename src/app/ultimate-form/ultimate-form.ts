@@ -1,6 +1,9 @@
 import { Component, computed, effect, input, OnInit, output, signal } from '@angular/core';
 import { FormsModule } from "@angular/forms";
 import { FieldConfig, MultiFieldValidator, ValidateOn, Validator } from "../types";
+import { TextInput } from "../text-input/text-input";
+import { PasswordInput } from "../password-input/password-input";
+import { NumberInput } from "../number-input/number-input";
 
 const defaultFieldConfigsValues = {
 	type: 'text',
@@ -11,12 +14,20 @@ const defaultFieldConfigsValues = {
 @Component({
 	selector: 'app-ultimate-form',
 	imports: [
-		FormsModule
+		FormsModule,
+		TextInput,
+		PasswordInput,
+		NumberInput
 	],
 	templateUrl: './ultimate-form.html',
 	styleUrl: './ultimate-form.css',
 })
 export class UltimateForm implements OnInit {
+	isButtonVisible = input.required<boolean>();
+	isDisplayNameVisible = input.required<boolean>();
+	flexDirection = input<'row' | 'column'>('column');
+	containerWidth = input<string>('100%');
+	gapBetweenFields = input<string>('16px');
 	validateOn = input.required<ValidateOn>()
 	globalValidators = input<Validator[]>()
 	multiFieldValidators = input<MultiFieldValidator[]>()
@@ -60,12 +71,9 @@ export class UltimateForm implements OnInit {
 		effect(() => {
 			if (this.validateOn() === ValidateOn.Change)
 				this.fieldsValidationErrors.set(this.getValidationErrors(false));
+			this.submit.emit(this.fieldValues());
 			this.fieldValues()
 		})
-	}
-
-	capitalizeFirstLetter(str: string): string {
-		return str.charAt(0).toUpperCase() + str.slice(1);
 	}
 
 	ngOnInit() {
@@ -85,7 +93,7 @@ export class UltimateForm implements OnInit {
 		let errors: { [key: string]: string } = {};
 		for (let field of this.fieldConfigs()) {
 			if (this.fieldHasBeenTouched()[field.name] || isSubmit) {
-				for (let { checkFn, errorMessage } of [...(this.globalValidators() ?? []), ...field.validators]) {
+				for (let { checkFn, errorMessage } of [ ...(this.globalValidators() ?? []), ...field.validators ]) {
 					const isValid = checkFn(this.fieldValues()[field.name]);
 					if (!isValid) {
 						errors[field.name] = errorMessage;
