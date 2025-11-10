@@ -47,6 +47,17 @@
                     [value]="fieldValues()[field.name]"
             />
         }
+        @if (field.type === 'radio') {
+            <app-radio-group
+                    (modify)="onFieldChange(field.name, $event)"
+                    [class]="fieldsValidationErrors()[field.name] ? 'input-error' : ''"
+                    [displayName]="field.displayName"
+                    [error]="fieldsValidationErrors()[field.name]"
+                    [isDisplayNameVisible]="isDisplayNameVisible()"
+                    [name]="field.name"
+                    [options]="field.options || []"
+            />
+        }
 
 
     }

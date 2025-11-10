@@ -4,6 +4,7 @@ import { FieldConfig, MultiFieldValidator, ValidateOn, Validator } from "../type
 import { TextInput } from "../text-input/text-input";
 import { PasswordInput } from "../password-input/password-input";
 import { NumberInput } from "../number-input/number-input";
+import { RadioGroup } from "../radio-group/radio-group";
 
 const defaultFieldConfigsValues = {
 	type: 'text',
@@ -17,7 +18,8 @@ const defaultFieldConfigsValues = {
 		FormsModule,
 		TextInput,
 		PasswordInput,
-		NumberInput
+		NumberInput,
+		RadioGroup
 	],
 	templateUrl: './ultimate-form.html',
 	styleUrl: './ultimate-form.css',
