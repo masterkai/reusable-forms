@@ -60,7 +60,7 @@ export const createFieldsMatchCheck = (fieldAName: string, fieldBName: string) =
 
 export const fieldsMatchValidator = (fieldAName: FieldConfig, fieldBName: FieldConfig): MultiFieldValidator => ({
 	checkFn: createFieldsMatchCheck(fieldAName.name, fieldBName.name),
-	errorMessage: `${fieldAName.name} and ${fieldBName.name} must match.`,
+	errorMessage: `${fieldAName.displayName} and ${fieldBName.displayName} must match.`,
 	fieldsInvolved: [fieldAName.name, fieldBName.name]
 })
 
