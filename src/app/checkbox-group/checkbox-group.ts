@@ -26,11 +26,11 @@ export class CheckboxGroup {
 	}
 
 	protected optionChanged(option: string) {
-		if (this.value().includes(option)) {
-			this.modify.emit(this.value().filter(o => o !== option))
+		const currentValue = Array.isArray(this.value()) ? this.value() : [];
+		if (currentValue.includes(option)) {
+			this.modify.emit(currentValue.filter(o => o !== option));
 		} else {
-			this.modify.emit(this.value().concat(option))
+			this.modify.emit(currentValue.concat(option));
 		}
-
 	}
 }

@@ -67,7 +67,7 @@
                     [isDisplayNameVisible]="isDisplayNameVisible()"
                     [name]="field.name"
                     [options]="field.options || []"
-                    [value]="Array.isArray(fieldValues()[field.name]) ? fieldValues()[field.name].join(', ') : fieldValues()[field.name]"
+                    [value]="fieldValues()[field.name]"
             />
         }
 
