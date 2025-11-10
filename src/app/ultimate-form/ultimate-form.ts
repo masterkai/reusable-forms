@@ -31,7 +31,7 @@ export class UltimateForm implements OnInit {
 	validateOn = input.required<ValidateOn>()
 	globalValidators = input<Validator[]>()
 	multiFieldValidators = input<MultiFieldValidator[]>()
-	fieldsValidationErrors = signal<any>({});
+	fieldsValidationErrors = signal<{ [key: string]: string }>({});
 	fields = input.required<(FieldConfig | string)[]>();
 	fieldValues = signal<{ [key: string]: any }>({});
 
@@ -93,7 +93,7 @@ export class UltimateForm implements OnInit {
 		let errors: { [key: string]: string } = {};
 		for (let field of this.fieldConfigs()) {
 			if (this.fieldHasBeenTouched()[field.name] || isSubmit) {
-				for (let { checkFn, errorMessage } of [ ...(this.globalValidators() ?? []), ...field.validators ]) {
+				for (let { checkFn, errorMessage } of [...(this.globalValidators() ?? []), ...field.validators]) {
 					const isValid = checkFn(this.fieldValues()[field.name]);
 					if (!isValid) {
 						errors[field.name] = errorMessage;
@@ -121,7 +121,7 @@ export class UltimateForm implements OnInit {
 	submitForm() {
 		this.fieldsValidationErrors.set(this.getValidationErrors(true));
 
-		if (this.fieldsValidationErrors().length > 0) {
+		if (Object.keys(this.fieldsValidationErrors()).length > 0) {
 			return;
 		}
 		this.submit.emit(this.fieldValues());
