@@ -13,13 +13,6 @@ import {
 	timePattern
 } from "./validators";
 
-const isNotEmpty = (value: string) => value.trim().length > 0;
-const isTwoCharsOrMore = (value: string) => isNotEmpty(value) && value.trim().length >= 2;
-const is21OrOlder = (value: string) => {
-	const age = Number(value);
-	return !isNaN(age) && age >= 21;
-}
-
 @Component({
 	selector: 'app-root',
 	imports: [FormsModule, UltimateForm],
@@ -39,16 +32,13 @@ export class App {
 		type: 'password',
 		hint: 'Must match the password entered above.',
 	}
-	globalValidators: Validator[] = [isNotEmptyValidator]
+	globalValidators: Validator[] = [isNotEmptyValidator, isTwoCharsOrMoreValidator]
 	multiFieldValidators: MultiFieldValidator[] = [fieldsMatchValidator(this.passwordFieldConfig, this.confirmPasswordFieldConfig)];
 	validateOn = ValidateOn;
 	formFields: (FieldConfig | string)[] = [
 		{
 			name: 'name',
-			validators: [
-				isNotEmptyValidator,
-				isTwoCharsOrMoreValidator
-			]
+			validators: []
 		},
 		// {
 		// 	name: 'myFavoriteFruit',
@@ -73,17 +63,17 @@ export class App {
 		{
 			name: 'age',
 			type: 'number',
-			validators: [isNotEmptyValidator, createMinValueValidator(21)]
+			validators: [createMinValueValidator(21)]
 		},
 		{
 			name: 'email',
-			validators: [isNotEmptyValidator, isEmailValidator]
+			validators: [isEmailValidator]
 		},
 		{
 			name: 'birthday',
 			type: 'date',
 			hint: 'Format: YYYY-MM-DD',
-			validators: [isNotEmptyValidator, createRegexValidator(datePattern, 'Date must be in YYYY-MM-DD format.')]
+			validators: [createRegexValidator(datePattern, 'Date must be in YYYY-MM-DD format.')]
 		},
 		{
 			name: 'favoriteTimeOfDay',
@@ -91,7 +81,7 @@ export class App {
 			type: 'time',
 			hint: 'Format: HH:MM',
 			validators: [
-				isNotEmptyValidator,
+
 				createRegexValidator(timePattern, 'Time must be in HH:MM format.')
 			]
 		},
@@ -101,7 +91,7 @@ export class App {
 			type: 'password',
 			hint: 'Must be at least 8 characters long.',
 			validators: [
-				isNotEmptyValidator, ...this.multiFieldValidators
+				...this.multiFieldValidators
 			]
 		},
 		{
@@ -110,7 +100,7 @@ export class App {
 			type: 'password',
 			hint: 'Must match the password entered above.',
 			validators: [
-				isNotEmptyValidator, ...this.multiFieldValidators
+				...this.multiFieldValidators
 			]
 		},
 		{
@@ -125,22 +115,22 @@ export class App {
 	formFields2: (FieldConfig | string)[] = [
 		{
 			name: 'countryCode',
-			validators: [isNotEmptyValidator, isTwoCharsOrMoreValidator],
+			validators: [],
 			width: '70px'
 		},
 		{
 			name: 'areaCode',
-			validators: [isNotEmptyValidator, isTwoCharsOrMoreValidator],
+			validators: [],
 			width: '60px'
 		},
 		{
 			name: 'phoneNumber',
-			validators: [isNotEmptyValidator, isTwoCharsOrMoreValidator],
+			validators: [],
 			width: '100%'
 		},
 		{
 			name: 'extensionNumber',
-			validators: [isNotEmptyValidator, isTwoCharsOrMoreValidator],
+			validators: [],
 			width: '70px'
 		},
 	];
