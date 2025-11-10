@@ -70,6 +70,7 @@ export class UltimateForm implements OnInit {
 	hasValidationErrors = computed(() => {
 		return Object.entries(this.fieldsValidationErrors()).length > 0;
 	})
+	protected readonly Array = Array;
 
 	constructor() {
 		effect(() => {
@@ -82,22 +83,37 @@ export class UltimateForm implements OnInit {
 
 	ngOnInit() {
 		for (let field of this.fieldConfigs()) {
-			this.fieldValues()[field.name] = '';
+			if (field.type === 'checkbox') {
+				this.fieldValues.update(prev => ({ ...prev, [field.name]: prev[field.name] || [] }));
+			} else {
+				this.fieldValues()[field.name] = this.fieldValues()[field.name] || '';
+			}
+
+
 		}
 	}
 
-	onFieldChange(field: string, $event: string) {
-		this.fieldValues.update(prev => ({
-			...prev,
-			[field]: $event
-		}))
+	onFieldChange(field: string, $event: string | string[]) {
+		this.fieldValues.update(prev => {
+			if (Array.isArray($event)) {
+				return {
+					...prev,
+					[field]: [ ...$event ]
+				}
+			} else {
+				return {
+					...prev,
+					[field]: $event
+				}
+			}
+		})
 	}
 
 	getValidationErrors(isSubmit: boolean) {
 		let errors: { [key: string]: string } = {};
 		for (let field of this.fieldConfigs()) {
 			if (this.fieldHasBeenTouched()[field.name] || isSubmit) {
-				for (let { checkFn, errorMessage } of [...(this.globalValidators() ?? []), ...field.validators]) {
+				for (let { checkFn, errorMessage } of [ ...(this.globalValidators() ?? []), ...field.validators ]) {
 					const isValid = checkFn(this.fieldValues()[field.name]);
 					if (!isValid) {
 						errors[field.name] = errorMessage;
