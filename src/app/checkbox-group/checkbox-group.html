@@ -1,1 +1,19 @@
-<div>{{ isDisplayNameVisible() ? ((displayName() || name()) | titlecase) : null }}</div>
+<div>
+    {{ isDisplayNameVisible() ? ((displayName() || name()) | titlecase) : null }}
+    @for (option of options(); track option) {
+        <label>
+            <input
+                    (blur)="onBlur()"
+                    (change)="optionChanged(option)"
+                    [checked]=" "
+                    [name]="name()"
+                    [value]="option"
+                    type="checkbox"
+            />
+            {{ option }}
+        </label>
+    }
+    @if (error()) {
+        <p>{{ error() }}</p>
+    }
+</div>

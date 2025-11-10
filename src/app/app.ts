@@ -48,13 +48,13 @@ export class App {
 			options: ['Apple', 'Banana', 'Orange', 'Mango', 'Pineapple'],
 			validators: []
 		},
-		// {
-		// 	name: 'myHobbies',
-		// 	displayName: 'My Hobbies',
-		// 	type: 'checkbox',
-		// 	options: [ 'Reading', 'Traveling', 'Cooking', 'Gaming', 'Sports' ],
-		// 	validators: [ isNotEmptyValidator ]
-		// },
+		{
+			name: 'myHobbies',
+			displayName: 'My Hobbies',
+			type: 'checkbox',
+			options: ['Reading', 'Traveling', 'Cooking', 'Gaming', 'Sports'],
+			validators: []
+		},
 		// {
 		// 	name: 'country',
 		// 	type: 'select',

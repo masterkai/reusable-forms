@@ -5,6 +5,7 @@ import { TextInput } from "../text-input/text-input";
 import { PasswordInput } from "../password-input/password-input";
 import { NumberInput } from "../number-input/number-input";
 import { RadioGroup } from "../radio-group/radio-group";
+import { CheckboxGroup } from "../checkbox-group/checkbox-group";
 
 const defaultFieldConfigsValues = {
 	type: 'text',
@@ -19,7 +20,8 @@ const defaultFieldConfigsValues = {
 		TextInput,
 		PasswordInput,
 		NumberInput,
-		RadioGroup
+		RadioGroup,
+		CheckboxGroup
 	],
 	templateUrl: './ultimate-form.html',
 	styleUrl: './ultimate-form.css',

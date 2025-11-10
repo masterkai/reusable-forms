@@ -20,4 +20,12 @@ export class CheckboxGroup {
 
 	modify = output<string>()
 	blur = output<void>()
+
+	onBlur() {
+		this.blur.emit();
+	}
+
+	protected optionChanged(option: string) {
+
+	}
 }

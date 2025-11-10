@@ -58,6 +58,17 @@
                     [options]="field.options || []"
             />
         }
+        @if (field.type === 'checkbox') {
+            <app-checkbox-group
+                    (modify)="onFieldChange(field.name, $event)"
+                    [class]="fieldsValidationErrors()[field.name] ? 'input-error' : ''"
+                    [displayName]="field.displayName"
+                    [error]="fieldsValidationErrors()[field.name]"
+                    [isDisplayNameVisible]="isDisplayNameVisible()"
+                    [name]="field.name"
+                    [options]="field.options || []"
+            />
+        }
 
 
     }
