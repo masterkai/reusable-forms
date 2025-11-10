@@ -1,4 +1,4 @@
-import { MultiFieldValidator } from "./types";
+import { FieldConfig, MultiFieldValidator } from "./types";
 
 const isNotEmpty = (value: string) => value.trim().length > 0;
 const isTwoCharsOrMore = (value: string) => isNotEmpty(value) && value.trim().length >= 2;
@@ -58,9 +58,7 @@ export const createFieldsMatchCheck = (fieldAName: string, fieldBName: string) =
 	return (values: { [key: string]: any }) => values[fieldAName] === values[fieldBName];
 }
 
-export const fieldsMatchValidator = (fieldAName: { name: string }, fieldBName: {
-	name: string
-}): MultiFieldValidator => ({
+export const fieldsMatchValidator = (fieldAName: FieldConfig, fieldBName: FieldConfig): MultiFieldValidator => ({
 	checkFn: createFieldsMatchCheck(fieldAName.name, fieldBName.name),
 	errorMessage: `${fieldAName.name} and ${fieldBName.name} must match.`,
 	fieldsInvolved: [fieldAName.name, fieldBName.name]
