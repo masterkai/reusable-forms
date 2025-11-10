@@ -125,23 +125,23 @@ export class App {
 	formFields2: (FieldConfig | string)[] = [
 		{
 			name: 'countryCode',
-			validators: [ isNotEmptyValidator, isTwoCharsOrMoreValidator ],
+			validators: [isNotEmptyValidator, isTwoCharsOrMoreValidator],
 			width: '70px'
 		},
 		{
 			name: 'areaCode',
-			validators: [ isNotEmptyValidator, isTwoCharsOrMoreValidator ],
+			validators: [isNotEmptyValidator, isTwoCharsOrMoreValidator],
 			width: '60px'
 		},
 		{
 			name: 'phoneNumber',
-			validators: [ isNotEmptyValidator, isTwoCharsOrMoreValidator ],
+			validators: [isNotEmptyValidator, isTwoCharsOrMoreValidator],
 			width: '100%'
 		},
 		{
 			name: 'extensionNumber',
-			validators: [ isNotEmptyValidator, isTwoCharsOrMoreValidator ],
-			width: '130px'
+			validators: [isNotEmptyValidator, isTwoCharsOrMoreValidator],
+			width: '70px'
 		},
 	];
 

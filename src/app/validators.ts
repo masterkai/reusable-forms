@@ -16,6 +16,14 @@ export const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export const timePattern = /^(?:[01]\d|2[0-3]):[0-5]\d$/; // HH:MM 24-hour format
 export const datePattern = /^\d{4}-\d{2}-\d{2}$/; // YYYY-MM-DD format
 
+export const passwordsMatch = (password: string, confirmPassword: string) => password === confirmPassword;
+
+export const passwordsMatchValidator: MultiFieldValidator = {
+	checkFn: (values: { [key: string]: string }) => values['password'] === values['confirmPassword'],
+	errorMessage: `Password and Confirm Password must match.`,
+	fieldsInvolved: ['password', 'confirmPassword']
+};
+
 const createRegexCheck = (pattern: RegExp) => (value: string) => pattern.test(value);
 
 export const createRegexValidator = (regExp: RegExp, pattern: string) => ({
@@ -46,13 +54,23 @@ export const createMinValueValidator = (minValue: number) => ({
 	errorMessage: `Field must be ${minValue} or over.`
 })
 
-export function fieldsMatchValidator(fieldA: { name: string }, fieldB: { name: string }): MultiFieldValidator {
-
-	return {
-		checkFn: (values: { [key: string]: any }) => values[fieldA.name] === values[fieldB.name],
-		errorMessage: `${fieldA.name} and ${fieldB.name} must match.`,
-		fieldsInvolved: [fieldA.name, fieldB.name]
-	};
-
-
+export const createFieldsMatchCheck = (fieldAName: string, fieldBName: string) => {
+	return (values: { [key: string]: any }) => values[fieldAName] === values[fieldBName];
 }
+
+export const fieldsMatchValidator = (fieldAName: { name: string }, fieldBName: {
+	name: string
+}): MultiFieldValidator => ({
+	checkFn: createFieldsMatchCheck(fieldAName.name, fieldBName.name),
+	errorMessage: `${fieldAName.name} and ${fieldBName.name} must match.`,
+	fieldsInvolved: [fieldAName.name, fieldBName.name]
+})
+
+// export function fieldsMatchValidator(fieldA: { name: string }, fieldB: { name: string }): MultiFieldValidator {
+//
+// 	return {
+// 		checkFn: (values: { [key: string]: any }) => values[fieldA.name] === values[fieldB.name],
+// 		errorMessage: `${fieldA.name} and ${fieldB.name} must match.`,
+// 		fieldsInvolved: [fieldA.name, fieldB.name]
+// 	};
+// }
