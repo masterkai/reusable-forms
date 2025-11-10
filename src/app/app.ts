@@ -3,6 +3,7 @@ import { FormsModule } from "@angular/forms";
 import { UltimateForm } from "./ultimate-form/ultimate-form";
 import { FieldConfig, MultiFieldValidator, ValidateOn, Validator } from "./types";
 import {
+	createMinLengthValidator,
 	createMinValueValidator,
 	createRegexValidator,
 	datePattern,
@@ -115,7 +116,7 @@ export class App {
 	formFields2: (FieldConfig | string)[] = [
 		{
 			name: 'countryCode',
-			validators: [],
+			validators: [createMinLengthValidator(3)],
 			width: '70px'
 		},
 		{
@@ -125,12 +126,12 @@ export class App {
 		},
 		{
 			name: 'phoneNumber',
-			validators: [],
+			validators: [createMinLengthValidator(8)],
 			width: '100%'
 		},
 		{
 			name: 'extensionNumber',
-			validators: [],
+			validators: [createMinLengthValidator(3)],
 			width: '70px'
 		},
 	];
