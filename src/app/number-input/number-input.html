@@ -1,4 +1,4 @@
-<label>{{ isDisplayNameVisible() ? (displayName() || capitalizeFirstLetter(name())) : null }}
+<label>{{ isDisplayNameVisible() ? ((displayName() || name()) | titlecase) : null }}
     <input
             (blur)="blurred()"
             (input)="valueChanged($event)"

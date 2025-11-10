@@ -1,10 +1,12 @@
 import { Component, HostBinding, Input, input, output } from '@angular/core';
 import { FormsModule } from "@angular/forms";
+import { TitleCasePipe } from "@angular/common";
 
 @Component({
 	selector: 'app-text-input',
 	imports: [
-		FormsModule
+		FormsModule,
+		TitleCasePipe
 	],
 	templateUrl: './text-input.html',
 	styleUrl: './text-input.css',

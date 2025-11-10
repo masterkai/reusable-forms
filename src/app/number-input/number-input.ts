@@ -1,8 +1,11 @@
 import { Component, HostBinding, Input, input, output } from '@angular/core';
+import { TitleCasePipe } from "@angular/common";
 
 @Component({
 	selector: 'app-number-input',
-	imports: [],
+	imports: [
+		TitleCasePipe
+	],
 	templateUrl: './number-input.html',
 	styleUrl: './number-input.css',
 })
@@ -17,10 +20,6 @@ export class NumberInput {
 	modify = output<string>()
 	blur = output<void>()
 	protected readonly HTMLInputElement = HTMLInputElement;
-
-	capitalizeFirstLetter(str: string): string {
-		return str.charAt(0).toUpperCase() + str.slice(1);
-	}
 
 	valueChanged(event: any) {
 		const value = event.target.value;

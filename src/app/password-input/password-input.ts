@@ -1,8 +1,11 @@
 import { Component, HostBinding, Input, input, output } from '@angular/core';
+import { TitleCasePipe } from "@angular/common";
 
 @Component({
 	selector: 'app-password-input',
-	imports: [],
+	imports: [
+		TitleCasePipe
+	],
 	templateUrl: './password-input.html',
 	styleUrl: './password-input.css',
 })
@@ -14,13 +17,10 @@ export class PasswordInput {
 	error = input.required<string | null>();
 	value = input.required<string>();
 	hint = input.required<string>();
+
 	modify = output<string>()
 	blur = output<void>()
 	protected readonly HTMLInputElement = HTMLInputElement;
-
-	capitalizeFirstLetter(str: string): string {
-		return str.charAt(0).toUpperCase() + str.slice(1);
-	}
 
 	valueChanged(event: any) {
 		const value = event.target.value;

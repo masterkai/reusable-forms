@@ -41,13 +41,13 @@ export class App {
 			name: 'name',
 			validators: []
 		},
-		// {
-		// 	name: 'myFavoriteFruit',
-		// 	displayName: 'My Favorite Fruit',
-		// 	type: 'radio',
-		// 	options: [ 'Apple', 'Banana', 'Orange', 'Mango', 'Pineapple' ],
-		// 	validators: [ isNotEmptyValidator ]
-		// },
+		{
+			name: 'myFavoriteFruit',
+			displayName: 'My Favorite Fruit',
+			type: 'radio',
+			options: ['Apple', 'Banana', 'Orange', 'Mango', 'Pineapple'],
+			validators: []
+		},
 		// {
 		// 	name: 'myHobbies',
 		// 	displayName: 'My Hobbies',
