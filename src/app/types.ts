@@ -13,9 +13,7 @@ export interface Validator {
 	errorMessage: string
 }
 
-export interface MultiFieldValidator {
-	checkFn: (value: any) => boolean;
-	errorMessage: string;
+export interface MultiFieldValidator extends Validator {
 	fieldsInvolved: string[];
 }
 
