@@ -1,10 +1,12 @@
 import { FieldConfig, MultiFieldValidator } from "./types";
 
 const isNotEmpty = (value: string | string[]) => {
+	console.log('value received for isNotEmpty check:', value);
 	if (Array.isArray(value)) {
 		console.log('value as array:', value);
 		return value.length > 0;
 	} else {
+		console.log('value as string:', value);
 		return value.trim().length > 0;
 	}
 };
