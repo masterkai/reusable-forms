@@ -1,11 +1,20 @@
 import { FieldConfig, MultiFieldValidator } from "./types";
 
-const isNotEmpty = (value: string) => value.trim().length > 0;
+const isNotEmpty = (value: string | string[]) => {
+	if (Array.isArray(value)) {
+		console.log('value as array:', value);
+		return value.length > 0;
+	} else {
+		return value.trim().length > 0;
+	}
+};
 const isTwoCharsOrMore = (value: string) => isNotEmpty(value) && value.trim().length >= 2;
 const is21OrOlder = (value: string) => {
 	const age = Number(value);
 	return !isNaN(age) && age >= 21;
 }
+
+const isCheckboxEmpty = (value: string[]) => value.length === 0;
 
 const createMinLengthCheck = (minLength: number) => {
 	return (value: string) => isNotEmpty(value) && value.trim().length >= minLength;
@@ -23,6 +32,11 @@ export const passwordsMatchValidator: MultiFieldValidator = {
 	errorMessage: `Password and Confirm Password must match.`,
 	fieldsInvolved: ['password', 'confirmPassword']
 };
+
+export const checkboxNotEmptyValidator = {
+	checkFn: isCheckboxEmpty,
+	errorMessage: 'At least one option must be selected.'
+}
 
 const createRegexCheck = (pattern: RegExp) => (value: string) => pattern.test(value);
 

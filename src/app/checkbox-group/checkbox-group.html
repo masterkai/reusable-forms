@@ -1,11 +1,11 @@
-<div>
+<div class="wrapper">
     {{ isDisplayNameVisible() ? ((displayName() || name()) | titlecase) : null }}
     @for (option of options(); track option) {
         <label>
             <input
                     (blur)="onBlur()"
                     (change)="optionChanged(option)"
-                    [checked]=" "
+                    [checked]="isChecked(option)"
                     [name]="name()"
                     [value]="option"
                     type="checkbox"

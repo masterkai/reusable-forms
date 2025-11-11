@@ -16,7 +16,7 @@ export class CheckboxGroup {
 	value = input<string[]>([])
 	error = input<string>()
 	hint = input<string>()
-	options = input<string[]>()
+	options = input<string[]>([])
 
 	modify = output<string[]>()
 	blur = output<void>()
@@ -32,5 +32,10 @@ export class CheckboxGroup {
 		} else {
 			this.modify.emit(currentValue.concat(option));
 		}
+	}
+
+	protected isChecked(option: string) {
+		const currentValue = Array.isArray(this.value()) ? this.value() : [];
+		return currentValue.includes(option);
 	}
 }

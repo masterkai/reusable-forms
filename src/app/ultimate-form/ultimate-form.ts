@@ -79,6 +79,11 @@ export class UltimateForm implements OnInit {
 			this.submit.emit(this.fieldValues());
 			this.fieldValues()
 		})
+
+		// effect(() => {
+		// 	console.log(this.fieldsValidationErrors());
+		// 	this.fieldsValidationErrors();
+		// });
 	}
 
 	ngOnInit() {
@@ -98,7 +103,7 @@ export class UltimateForm implements OnInit {
 			if (Array.isArray($event)) {
 				return {
 					...prev,
-					[field]: [ ...$event ]
+					[field]: [...$event]
 				}
 			} else {
 				return {
@@ -113,7 +118,7 @@ export class UltimateForm implements OnInit {
 		let errors: { [key: string]: string } = {};
 		for (let field of this.fieldConfigs()) {
 			if (this.fieldHasBeenTouched()[field.name] || isSubmit) {
-				for (let { checkFn, errorMessage } of [ ...(this.globalValidators() ?? []), ...field.validators ]) {
+				for (let { checkFn, errorMessage } of [...(this.globalValidators() ?? []), ...field.validators]) {
 					const isValid = checkFn(this.fieldValues()[field.name]);
 					if (!isValid) {
 						errors[field.name] = errorMessage;
