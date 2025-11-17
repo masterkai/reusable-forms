@@ -49,7 +49,11 @@ export class UltimateForm implements OnInit {
 						displayName: field,
 					};
 				} else {
-					return { ...defaultFieldConfigsValues, displayName: field.name, ...field };
+					return {
+						...defaultFieldConfigsValues,
+						displayName: field.name,
+						...field
+					};
 				}
 			}) : [];
 	})
@@ -68,7 +72,7 @@ export class UltimateForm implements OnInit {
 
 	submit = output<any>()
 	hasValidationErrors = computed(() => {
-		return Object.entries(this.fieldsValidationErrors()).length > 0;
+		return Object.keys(this.fieldsValidationErrors()).length > 0;
 	})
 	protected readonly Array = Array;
 
@@ -84,6 +88,11 @@ export class UltimateForm implements OnInit {
 		// 	console.log(this.fieldsValidationErrors());
 		// 	this.fieldsValidationErrors();
 		// });
+
+		effect(() => {
+			this.fieldHasBeenTouched();
+			console.log(this.fieldHasBeenTouched());
+		});
 	}
 
 	ngOnInit() {
@@ -93,8 +102,6 @@ export class UltimateForm implements OnInit {
 			} else {
 				this.fieldValues()[field.name] = this.fieldValues()[field.name] || '';
 			}
-
-
 		}
 	}
 
@@ -117,8 +124,12 @@ export class UltimateForm implements OnInit {
 	getValidationErrors(isSubmit: boolean) {
 		let errors: { [key: string]: string } = {};
 		for (let field of this.fieldConfigs()) {
+			console.log(this.fieldHasBeenTouched()[field.name], field.name)
 			if (this.fieldHasBeenTouched()[field.name] || isSubmit) {
-				for (let { checkFn, errorMessage } of [...(this.globalValidators() ?? []), ...field.validators]) {
+				for (let {
+					checkFn,
+					errorMessage
+				} of [...(this.globalValidators() ?? []), ...(field.validators ?? [])]) {
 					const isValid = checkFn(this.fieldValues()[field.name]);
 					if (!isValid) {
 						errors[field.name] = errorMessage;
