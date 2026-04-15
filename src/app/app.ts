@@ -82,7 +82,6 @@ export class App {
 			type: 'time',
 			hint: 'Format: HH:MM',
 			validators: [
-
 				createRegexValidator(timePattern, 'Time must be in HH:MM format.')
 			]
 		},
