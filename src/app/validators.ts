@@ -1,16 +1,22 @@
 import { FieldConfig, MultiFieldValidator } from "./types";
 
-const isNotEmpty = (value: string | string[]) => {
-	console.log('value received for isNotEmpty check:', value);
+const isNotEmpty = (value: unknown) => {
 	if (Array.isArray(value)) {
-		console.log('value as array:', value);
 		return value.length > 0;
-	} else {
-		console.log('value as string:', value);
+	}
+	if (typeof value === 'string') {
 		return value.trim().length > 0;
 	}
+	return value !== null && value !== undefined;
 };
-const isTwoCharsOrMore = (value: string) => isNotEmpty(value) && value.trim().length >= 2;
+
+const isTwoCharsOrMore = (value: unknown) => {
+	// This validator is string-specific; skip non-string fields like checkbox arrays.
+	if (typeof value !== 'string') {
+		return true;
+	}
+	return isNotEmpty(value) && value.trim().length >= 2;
+};
 const is21OrOlder = (value: string) => {
 	const age = Number(value);
 	return !isNaN(age) && age >= 21;

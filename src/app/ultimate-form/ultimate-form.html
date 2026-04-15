@@ -49,7 +49,8 @@
         }
         @if (field.type === 'radio') {
             <app-radio-group
-                    (modify)="onFieldChange(field.name, $event)"
+                    (blur)="setFieldToBeEdited(field.name)"
+                    (modify)="onFieldChange(field.name, $event); setFieldToBeEdited(field.name)"
                     [class]="fieldsValidationErrors()[field.name] ? 'input-error' : ''"
                     [displayName]="field.displayName"
                     [error]="fieldsValidationErrors()[field.name]"
@@ -60,7 +61,8 @@
         }
         @if (field.type === 'checkbox') {
             <app-checkbox-group
-                    (modify)="onFieldChange(field.name, $event)"
+                    (blur)="setFieldToBeEdited(field.name)"
+                    (modify)="onFieldChange(field.name, $event); setFieldToBeEdited(field.name)"
                     [class]="fieldsValidationErrors()[field.name] ? 'input-error' : ''"
                     [displayName]="field.displayName"
                     [error]="fieldsValidationErrors()[field.name]"
