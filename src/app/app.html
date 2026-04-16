@@ -1,22 +1,21 @@
-<app-ultimate-form
-        (submit)="onFormSubmit($event)"
-        [fields]="formFields"
-        [flexDirection]="'column'"
-        [globalValidators]="globalValidators"
-        [isButtonVisible]="true"
-        [isDisplayNameVisible]="true"
-        [multiFieldValidators]="multiFieldValidators"
-        [validateOn]="validateOn.Submit"
-/>
-
 <!--<app-ultimate-form-->
 <!--        (submit)="onFormSubmit($event)"-->
-<!--        [fields]="formFields2"-->
-<!--        [flexDirection]="'row'"-->
-<!--        [gapBetweenFields]="'8px'"-->
+<!--        [fields]="formFields"-->
+<!--        [flexDirection]="'column'"-->
 <!--        [globalValidators]="globalValidators"-->
-<!--        [isButtonVisible]="false"-->
-<!--        [isDisplayNameVisible]="false"-->
+<!--        [isButtonVisible]="true"-->
+<!--        [isDisplayNameVisible]="true"-->
 <!--        [multiFieldValidators]="multiFieldValidators"-->
-<!--        [validateOn]="validateOn.Change"-->
+<!--        [validateOn]="validateOn.Submit"-->
 <!--/>-->
+
+<app-ultimate-form
+  (valueChange)="onFormSubmit($event)"
+  [fields]="formFields"
+  [flexDirection]="'column'"
+  [globalValidators]="globalValidators"
+  [isButtonVisible]="false"
+  [isDisplayNameVisible]="true"
+  [multiFieldValidators]="multiFieldValidators"
+  [validateOn]="validateOn.Change"
+/>
