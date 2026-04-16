@@ -14,10 +14,39 @@ describe('DropdownSelector', () => {
 
     fixture = TestBed.createComponent(DropdownSelector);
     component = fixture.componentInstance;
+    fixture.componentRef.setInput('name', 'country');
+    fixture.componentRef.setInput('displayName', 'Country');
+    fixture.componentRef.setInput('value', 'TW');
+    fixture.componentRef.setInput('hint', 'Please select country');
+    fixture.componentRef.setInput('options', ['TW', 'JP']);
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should render dropdown options', () => {
+    const options = fixture.nativeElement.querySelectorAll('option');
+    expect(options.length).toBe(3);
+    expect(options[1].value).toBe('TW');
+    expect(options[2].value).toBe('JP');
+  });
+
+  it('should emit selected value on change', () => {
+    spyOn(component.modify, 'emit');
+    const selectElement: HTMLSelectElement = fixture.nativeElement.querySelector('select');
+    selectElement.value = 'JP';
+    selectElement.dispatchEvent(new Event('change'));
+
+    expect(component.modify.emit).toHaveBeenCalledWith('JP');
+  });
+
+  it('should emit blur event', () => {
+    spyOn(component.blur, 'emit');
+    const selectElement: HTMLSelectElement = fixture.nativeElement.querySelector('select');
+    selectElement.dispatchEvent(new Event('blur'));
+
+    expect(component.blur.emit).toHaveBeenCalled();
   });
 });

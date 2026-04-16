@@ -55,12 +55,12 @@ export class App {
 			options: ['Reading', 'Traveling', 'Cooking', 'Gaming', 'Sports'],
 			validators: []
 		},
-		// {
-		// 	name: 'country',
-		// 	type: 'select',
-		// 	options: [ 'USA', 'Canada', 'UK', 'Australia', 'Germany' ],
-		// 	validators: [ isNotEmptyValidator ]
-		// },
+		{
+			name: 'country',
+			type: 'select',
+			options: [ 'USA', 'Canada', 'UK', 'Australia', 'Germany' ],
+			validators: [ isNotEmptyValidator ]
+		},
 		{
 			name: 'age',
 			type: 'number',

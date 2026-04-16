@@ -1,1 +1,18 @@
-<p>dropdown-selector works!</p>
+<label class="wrapper">
+	{{ isDisplayNameVisible() ? ((displayName() || name()) | titlecase) : null }}
+	<select
+			(blur)="onBlur()"
+			(change)="onValueChanged($event)"
+			[class]="error() ? 'input-error' : ''"
+			[name]="name()"
+			[value]="value()"
+	>
+		<option disabled [value]="''">{{ hint() || 'Please select an option' }}</option>
+		@for (option of options(); track option) {
+			<option [value]="option">{{ option }}</option>
+		}
+	</select>
+	@if (error()) {
+		<span class="error-message">{{ error() }}</span>
+	}
+</label>
