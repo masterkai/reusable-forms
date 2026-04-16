@@ -1,9 +1,11 @@
 import { Component, input, output } from '@angular/core';
 import { TitleCasePipe } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { SelectModule } from 'primeng/select';
 
 @Component({
 	selector: 'app-dropdown-selector',
-	imports: [TitleCasePipe],
+	imports: [TitleCasePipe, FormsModule, SelectModule],
 	templateUrl: './dropdown-selector.html',
 	styleUrl: './dropdown-selector.css',
 })
@@ -23,8 +25,7 @@ export class DropdownSelector {
 		this.blur.emit();
 	}
 
-	onValueChanged(event: Event) {
-		const selectElement = event.target as HTMLSelectElement;
-		this.modify.emit(selectElement.value);
+	onValueChanged(value: string) {
+		this.modify.emit(value);
 	}
 }

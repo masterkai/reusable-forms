@@ -1,12 +1,12 @@
 import { Component, HostBinding, Input, input, output } from '@angular/core';
-import { FormsModule } from "@angular/forms";
 import { TitleCasePipe } from "@angular/common";
+import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
 	selector: 'app-text-input',
 	imports: [
-		FormsModule,
-		TitleCasePipe
+		TitleCasePipe,
+		InputTextModule
 	],
 	templateUrl: './text-input.html',
 	styleUrl: './text-input.css',
@@ -23,9 +23,6 @@ export class TextInput {
 	blur = output<void>()
 	protected readonly HTMLInputElement = HTMLInputElement;
 
-	capitalizeFirstLetter(str: string): string {
-		return str.charAt(0).toUpperCase() + str.slice(1);
-	}
 
 	valueChanged(event: any) {
 		const value = event.target.value;

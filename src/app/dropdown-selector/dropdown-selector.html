@@ -1,18 +1,17 @@
-<label class="wrapper">
-	{{ isDisplayNameVisible() ? ((displayName() || name()) | titlecase) : null }}
-	<select
-			(blur)="onBlur()"
-			(change)="onValueChanged($event)"
-			[class]="error() ? 'input-error' : ''"
-			[name]="name()"
-			[value]="value()"
-	>
-		<option disabled [value]="''">{{ hint() || 'Please select an option' }}</option>
-		@for (option of options(); track option) {
-			<option [value]="option">{{ option }}</option>
-		}
-	</select>
-	@if (error()) {
-		<span class="error-message">{{ error() }}</span>
+<div class="wrapper" (focusout)="onBlur()">
+	@if (isDisplayNameVisible()) {
+		<label class="group-label">{{ (displayName() || name()) | titlecase }}</label>
 	}
-</label>
+	<p-select
+			[invalid]="!!error()"
+			[ngModel]="value()"
+			[options]="options()"
+			[placeholder]="hint() || 'Please select an option'"
+			(ngModelChange)="onValueChanged($event)"
+			appendTo="body"
+			styleClass="full-width-select"
+	/>
+	@if (error()) {
+		<small class="error-message">{{ error() }}</small>
+	}
+</div>

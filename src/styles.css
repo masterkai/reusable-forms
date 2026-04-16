@@ -1,5 +1,19 @@
+@import 'primeicons/primeicons.css';
+
 .error {
     background-color: pink;
     border-radius: 8px;
     padding: 8px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 24px;
+    font-family: Inter, 'Segoe UI', Roboto, Arial, sans-serif;
+    background: #f8fafc;
+    color: #111827;
 }

@@ -1,5 +1,6 @@
 <label [style]="{ width:columnWidth }">{{ isDisplayNameVisible() ? ((displayName() || name()) | titlecase) : null }}
     <input
+            pInputText
             (blur)="blurred()"
             (input)="valueChanged($event)"
             [class]="error() ? 'input-error' : ''"
@@ -9,6 +10,6 @@
             type="text"
     />
     @if (error()) {
-        <span class="error-message">{{ error() }}</span>
+        <small class="error-message">{{ error() }}</small>
     }
 </label>

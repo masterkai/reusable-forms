@@ -1,10 +1,14 @@
 import { Component, input, output } from '@angular/core';
 import { TitleCasePipe } from "@angular/common";
+import { FormsModule } from '@angular/forms';
+import { RadioButtonModule } from 'primeng/radiobutton';
 
 @Component({
 	selector: 'app-radio-group',
 	imports: [
-		TitleCasePipe
+		TitleCasePipe,
+		FormsModule,
+		RadioButtonModule
 	],
 	templateUrl: './radio-group.html',
 	styleUrl: './radio-group.css',

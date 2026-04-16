@@ -1,19 +1,21 @@
-<div>
-    {{ isDisplayNameVisible() ? ((displayName() || name()) | titlecase) : null }}
-    @for (option of options(); track option) {
-        <label>
-            <input
-                    (blur)="onBlur()"
-                    (change)="optionChanged(option)"
-                    [checked]="value() === option"
-                    [name]="name()"
-                    [value]="option"
-                    type="radio"
-            />
-            {{ option }}
-        </label>
+<div class="wrapper" (focusout)="onBlur()">
+    @if (isDisplayNameVisible()) {
+        <span class="group-label">{{ (displayName() || name()) | titlecase }}</span>
     }
+    <div class="options-wrapper">
+        @for (option of options(); track option) {
+            <div class="option-row">
+                <p-radiobutton
+                        [inputId]="name() + '-' + option"
+                        [name]="name()"
+                        [ngModel]="value()"
+                        [value]="option"
+                        (ngModelChange)="optionChanged($event)"></p-radiobutton>
+                <label [for]="name() + '-' + option">{{ option }}</label>
+            </div>
+        }
+    </div>
     @if (error()) {
-        <p>{{ error() }}</p>
+        <small class="error-message">{{ error() }}</small>
     }
 </div>

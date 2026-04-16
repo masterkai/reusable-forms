@@ -1,10 +1,14 @@
 import { Component, input, output } from '@angular/core';
 import { TitleCasePipe } from "@angular/common";
+import { FormsModule } from '@angular/forms';
+import { CheckboxModule } from 'primeng/checkbox';
 
 @Component({
 	selector: 'app-checkbox-group',
 	imports: [
-		TitleCasePipe
+		TitleCasePipe,
+		FormsModule,
+		CheckboxModule
 	],
 	templateUrl: './checkbox-group.html',
 	styleUrl: './checkbox-group.css',
@@ -25,12 +29,14 @@ export class CheckboxGroup {
 		this.blur.emit();
 	}
 
-	protected optionChanged(option: string) {
+	protected optionChanged(option: string, checked: boolean) {
 		const currentValue = Array.isArray(this.value()) ? this.value() : [];
-		if (currentValue.includes(option)) {
-			this.modify.emit(currentValue.filter(o => o !== option));
-		} else {
+		if (checked && !currentValue.includes(option)) {
 			this.modify.emit(currentValue.concat(option));
+			return;
+		}
+		if (!checked && currentValue.includes(option)) {
+			this.modify.emit(currentValue.filter(o => o !== option));
 		}
 	}
 

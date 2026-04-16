@@ -7,6 +7,7 @@ import { NumberInput } from "../number-input/number-input";
 import { RadioGroup } from "../radio-group/radio-group";
 import { CheckboxGroup } from "../checkbox-group/checkbox-group";
 import { DropdownSelector } from '../dropdown-selector/dropdown-selector';
+import { ButtonModule } from 'primeng/button';
 
 const defaultFieldConfigsValues = {
 	type: 'text',
@@ -23,7 +24,8 @@ const defaultFieldConfigsValues = {
 		NumberInput,
 		RadioGroup,
 		CheckboxGroup,
-		DropdownSelector
+		DropdownSelector,
+		ButtonModule
 	],
 	templateUrl: './ultimate-form.html',
 	styleUrl: './ultimate-form.css',

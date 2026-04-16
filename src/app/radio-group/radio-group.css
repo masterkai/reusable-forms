@@ -1,0 +1,27 @@
+.wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.group-label {
+	font-weight: 700;
+}
+
+.options-wrapper {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px 16px;
+}
+
+.option-row {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.error-message {
+	color: #dc2626;
+	font-size: 0.875rem;
+}
+
