@@ -16,7 +16,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 export class RadioGroup {
 	name = input.required<string>()
 	displayName = input<string>()
-	value = input<string>()
+	value = input<string>('')
 	error = input<string>()
 	hint = input<string>()
 	options = input<string[]>([])
