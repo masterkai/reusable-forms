@@ -1,4 +1,4 @@
-import { FieldConfig, MultiFieldValidator } from "./types";
+import { FieldConfig, MultiFieldValidator, Validator } from "./types";
 
 const isNotEmpty = (value: unknown) => {
 	if (Array.isArray(value)) {
@@ -25,7 +25,12 @@ const is21OrOlder = (value: string) => {
 const isCheckboxEmpty = (value: string[]) => value.length === 0;
 
 const createMinLengthCheck = (minLength: number) => {
-	return (value: string) => isNotEmpty(value) && value.trim().length >= minLength;
+	return (value: unknown) => {
+		if (typeof value !== 'string') {
+			return true;
+		}
+		return isNotEmpty(value) && value.trim().length >= minLength;
+	};
 }
 
 const createMinValueCheck = (minValue: number) => (value: number) => value >= minValue;
@@ -41,14 +46,19 @@ export const passwordsMatchValidator: MultiFieldValidator = {
 	fieldsInvolved: ['password', 'confirmPassword']
 };
 
-export const checkboxNotEmptyValidator = {
-	checkFn: isCheckboxEmpty,
+export const checkboxNotEmptyValidator: Validator = {
+	checkFn: (value: string[]) => !isCheckboxEmpty(value),
 	errorMessage: 'At least one option must be selected.'
 }
 
-const createRegexCheck = (pattern: RegExp) => (value: string) => pattern.test(value);
+const createRegexCheck = (pattern: RegExp) => (value: unknown) => {
+	if (typeof value !== 'string') {
+		return true;
+	}
+	return pattern.test(value);
+};
 
-export const createRegexValidator = (regExp: RegExp, pattern: string) => ({
+export const createRegexValidator = (regExp: RegExp, pattern: string): Validator => ({
 	checkFn: createRegexCheck(regExp),
 	errorMessage: `Field must be a valid ${pattern}`
 });
@@ -56,22 +66,22 @@ export const createRegexValidator = (regExp: RegExp, pattern: string) => ({
 
 export const isEmailValidator = createRegexValidator(emailPattern, 'Email address')
 
-export const isNotEmptyValidator = {
+export const isNotEmptyValidator: Validator = {
 	checkFn: isNotEmpty,
 	errorMessage: 'This field cannot be empty.'
 }
 
-export const isTwoCharsOrMoreValidator = {
+export const isTwoCharsOrMoreValidator: Validator = {
 	checkFn: isTwoCharsOrMore,
 	errorMessage: 'This field must be at least 2 characters long.'
 };
 
-export const createMinLengthValidator = (minLength: number) => ({
+export const createMinLengthValidator = (minLength: number): Validator => ({
 	checkFn: createMinLengthCheck(minLength),
 	errorMessage: `This field must be at least ${minLength} characters long.`
 })
 
-export const createMinValueValidator = (minValue: number) => ({
+export const createMinValueValidator = (minValue: number): Validator => ({
 	checkFn: createMinValueCheck(minValue),
 	errorMessage: `Field must be ${minValue} or over.`
 })
