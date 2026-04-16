@@ -64,7 +64,7 @@ export class UltimateForm implements OnInit {
 
 	allFieldsHasValue = computed(() => {
 		for (let field of this.fieldConfigs()) {
-			if (!this.fieldValues()[field.name] || this.fieldValues()[field.name].toString().trim() === '') {
+			if (!this.hasValue(this.fieldValues()[field.name])) {
 				return false;
 			}
 		}
@@ -78,35 +78,27 @@ export class UltimateForm implements OnInit {
 	hasValidationErrors = computed(() => {
 		return Object.keys(this.fieldsValidationErrors()).length > 0;
 	})
-	protected readonly Array = Array;
 
 	constructor() {
 		effect(() => {
-			if (this.validateOn() === ValidateOn.Change)
+			const values = this.fieldValues();
+			if (this.validateOn() === ValidateOn.Change) {
 				this.fieldsValidationErrors.set(this.getValidationErrors(false));
-			this.submit.emit(this.fieldValues());
-			this.fieldValues()
+			}
+			this.submit.emit(values);
 		})
-
-		// effect(() => {
-		// 	console.log(this.fieldsValidationErrors());
-		// 	this.fieldsValidationErrors();
-		// });
-
-		effect(() => {
-			this.fieldHasBeenTouched();
-			console.log(this.fieldHasBeenTouched());
-		});
 	}
 
 	ngOnInit() {
+		const initialValues: { [key: string]: any } = {};
 		for (let field of this.fieldConfigs()) {
 			if (field.type === 'checkbox') {
-				this.fieldValues.update(prev => ({ ...prev, [field.name]: prev[field.name] || [] }));
+				initialValues[field.name] = [];
 			} else {
-				this.fieldValues()[field.name] = this.fieldValues()[field.name] || '';
+				initialValues[field.name] = '';
 			}
 		}
+		this.fieldValues.set(initialValues);
 	}
 
 	onFieldChange(field: string, $event: string | string[]) {
@@ -127,14 +119,16 @@ export class UltimateForm implements OnInit {
 
 	getValidationErrors(isSubmit: boolean) {
 		let errors: { [key: string]: string } = {};
+		const values = this.fieldValues();
+		const touchedFields = this.fieldHasBeenTouched();
+		const globalValidators = this.globalValidators() ?? [];
 		for (let field of this.fieldConfigs()) {
-			console.log(this.fieldHasBeenTouched()[field.name], field.name)
-			if (this.fieldHasBeenTouched()[field.name] || isSubmit) {
+			if (touchedFields[field.name] || isSubmit) {
 				for (let {
 					checkFn,
 					errorMessage
-				} of [...(this.globalValidators() ?? []), ...(field.validators ?? [])]) {
-					const isValid = checkFn(this.fieldValues()[field.name]);
+				} of [...globalValidators, ...(field.validators ?? [])]) {
+					const isValid = checkFn(values[field.name]);
 					if (!isValid) {
 						errors[field.name] = errorMessage;
 						break;
@@ -144,8 +138,8 @@ export class UltimateForm implements OnInit {
 
 		}
 		for (let validator of this.multiFieldValidators() ?? []) {
-			if (validator.fieldsInvolved.every(fieldName => this.fieldHasBeenTouched()[fieldName]) || isSubmit) {
-				const isValid = validator.checkFn(this.fieldValues());
+			if (validator.fieldsInvolved.every(fieldName => touchedFields[fieldName]) || isSubmit) {
+				const isValid = validator.checkFn(values);
 				if (!isValid) {
 					for (let fieldName of validator.fieldsInvolved) {
 						errors[fieldName] = validator.errorMessage;
@@ -165,6 +159,16 @@ export class UltimateForm implements OnInit {
 			return;
 		}
 		this.submit.emit(this.fieldValues());
+	}
+
+	private hasValue(value: any) {
+		if (Array.isArray(value)) {
+			return value.length > 0;
+		}
+		if (typeof value === 'string') {
+			return value.trim().length > 0;
+		}
+		return value !== null && value !== undefined;
 	}
 
 	protected setFieldToBeEdited(fieldName: string) {
