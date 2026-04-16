@@ -1,13 +1,12 @@
 <app-ultimate-form
         (submit)="onFormSubmit($event)"
-        (valueChange)="onFormSubmit($event)"
         [fields]="formFields"
         [flexDirection]="'column'"
         [globalValidators]="globalValidators"
-        [isButtonVisible]="false"
+        [isButtonVisible]="true"
         [isDisplayNameVisible]="true"
         [multiFieldValidators]="multiFieldValidators"
-        [validateOn]="validateOn.Change"
+        [validateOn]="validateOn.Submit"
 />
 
 <!--<app-ultimate-form-->
