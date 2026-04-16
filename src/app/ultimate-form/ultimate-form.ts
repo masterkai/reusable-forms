@@ -1,12 +1,12 @@
 import { Component, computed, effect, input, OnInit, output, signal } from '@angular/core';
 import { FormsModule } from "@angular/forms";
 import { FieldConfig, MultiFieldValidator, ValidateOn, Validator } from "../types";
-import { TextInput } from "../text-input/text-input";
-import { PasswordInput } from "../password-input/password-input";
-import { NumberInput } from "../number-input/number-input";
-import { RadioGroup } from "../radio-group/radio-group";
-import { CheckboxGroup } from "../checkbox-group/checkbox-group";
-import { DropdownSelector } from '../dropdown-selector/dropdown-selector';
+import { TextInput } from "./text-input/text-input";
+import { PasswordInput } from "./password-input/password-input";
+import { NumberInput } from "./number-input/number-input";
+import { RadioGroup } from "./radio-group/radio-group";
+import { CheckboxGroup } from "./checkbox-group/checkbox-group";
+import { DropdownSelector } from './dropdown-selector/dropdown-selector';
 import { ButtonModule } from 'primeng/button';
 
 const defaultFieldConfigsValues = {
