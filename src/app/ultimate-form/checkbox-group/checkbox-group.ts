@@ -1,14 +1,14 @@
 import { Component, input, output } from '@angular/core';
 import { TitleCasePipe } from "@angular/common";
 import { FormsModule } from '@angular/forms';
-import { CheckboxModule } from 'primeng/checkbox';
+import { Checkbox } from 'primeng/checkbox';
 
 @Component({
 	selector: 'app-checkbox-group',
 	imports: [
 		TitleCasePipe,
 		FormsModule,
-		CheckboxModule
+		Checkbox
 	],
 	templateUrl: './checkbox-group.html',
 	styleUrl: './checkbox-group.css',

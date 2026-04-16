@@ -8,7 +8,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 	imports: [
 		TitleCasePipe,
 		FormsModule,
-		RadioButtonModule
+    RadioButtonModule
 	],
 	templateUrl: './radio-group.html',
 	styleUrl: './radio-group.css',

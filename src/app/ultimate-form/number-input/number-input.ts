@@ -1,12 +1,12 @@
 import { Component, HostBinding, Input, input, output } from '@angular/core';
 import { TitleCasePipe } from "@angular/common";
-import { InputTextModule } from 'primeng/inputtext';
+import { InputText } from 'primeng/inputtext';
 
 @Component({
 	selector: 'app-number-input',
 	imports: [
 		TitleCasePipe,
-		InputTextModule
+		InputText
 	],
 	templateUrl: './number-input.html',
 	styleUrl: './number-input.css',

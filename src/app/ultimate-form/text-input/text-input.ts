@@ -1,13 +1,13 @@
 import { Component, HostBinding, Input, input, output } from '@angular/core';
 import { TitleCasePipe } from "@angular/common";
-import { InputTextModule } from 'primeng/inputtext';
+import { InputText, InputTextModule } from 'primeng/inputtext';
 
 @Component({
 	selector: 'app-text-input',
-	imports: [
-		TitleCasePipe,
-		InputTextModule
-	],
+  imports: [
+    TitleCasePipe,
+    InputText,
+  ],
 	templateUrl: './text-input.html',
 	styleUrl: './text-input.css',
 })

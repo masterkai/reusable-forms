@@ -1,11 +1,11 @@
 import { Component, input, output } from '@angular/core';
 import { TitleCasePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { SelectModule } from 'primeng/select';
+import { Select } from 'primeng/select';
 
 @Component({
 	selector: 'app-dropdown-selector',
-	imports: [TitleCasePipe, FormsModule, SelectModule],
+	imports: [TitleCasePipe, FormsModule, Select],
 	templateUrl: './dropdown-selector.html',
 	styleUrl: './dropdown-selector.css',
 })
