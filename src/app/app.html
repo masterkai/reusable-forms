@@ -1,5 +1,6 @@
 <app-ultimate-form
         (submit)="onFormSubmit($event)"
+        (valueChange)="onFormSubmit($event)"
         [fields]="formFields"
         [flexDirection]="'column'"
         [globalValidators]="globalValidators"

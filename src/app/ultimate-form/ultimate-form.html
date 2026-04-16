@@ -5,55 +5,57 @@
         [style]="{'max-width': containerWidth(),'gap': gapBetweenFields()}"
 >
     @for (field of fieldConfigs(); track field.name) {
+        @let fieldError = fieldsValidationErrors()[field.name];
+        @let fieldValue = fieldValues()[field.name];
         @if (field.type === 'text') {
             <app-text-input
                     (blur)="setFieldToBeEdited(field.name)"
                     (modify)="onFieldChange(field.name, $event)"
-                    [class]="fieldsValidationErrors()[field.name] ? 'input-error' : ''"
+                    [class]="fieldError ? 'input-error' : ''"
                     [columnWidth]="field.width ?? ''"
                     [displayName]="field.displayName"
-                    [error]="fieldsValidationErrors()[field.name]"
+                    [error]="fieldError"
                     [hint]="field.hint"
                     [isDisplayNameVisible]="isDisplayNameVisible()"
                     [name]="field.name"
-                    [value]="fieldValues()[field.name]"
+                    [value]="fieldValue"
             />
         }
         @if (field.type === 'password') {
             <app-password-input
                     (blur)="setFieldToBeEdited(field.name)"
                     (modify)="onFieldChange(field.name, $event)"
-                    [class]="fieldsValidationErrors()[field.name] ? 'input-error' : ''"
+                    [class]="fieldError ? 'input-error' : ''"
                     [columnWidth]="field.width ?? ''"
                     [displayName]="field.displayName"
-                    [error]="fieldsValidationErrors()[field.name]"
+                    [error]="fieldError"
                     [hint]="field.hint"
                     [isDisplayNameVisible]="isDisplayNameVisible()"
                     [name]="field.name"
-                    [value]="fieldValues()[field.name]"
+                    [value]="fieldValue"
             />
         }
         @if (field.type === 'number') {
             <app-number-input
                     (blur)="setFieldToBeEdited(field.name)"
                     (modify)="onFieldChange(field.name, $event)"
-                    [class]="fieldsValidationErrors()[field.name] ? 'input-error' : ''"
+                    [class]="fieldError ? 'input-error' : ''"
                     [columnWidth]="field.width ?? ''"
                     [displayName]="field.displayName"
-                    [error]="fieldsValidationErrors()[field.name]"
+                    [error]="fieldError"
                     [hint]="field.hint"
                     [isDisplayNameVisible]="isDisplayNameVisible()"
                     [name]="field.name"
-                    [value]="fieldValues()[field.name]"
+                    [value]="fieldValue"
             />
         }
         @if (field.type === 'radio') {
             <app-radio-group
                     (blur)="setFieldToBeEdited(field.name)"
                     (modify)="onFieldChange(field.name, $event); setFieldToBeEdited(field.name)"
-                    [class]="fieldsValidationErrors()[field.name] ? 'input-error' : ''"
+                    [class]="fieldError ? 'input-error' : ''"
                     [displayName]="field.displayName"
-                    [error]="fieldsValidationErrors()[field.name]"
+                    [error]="fieldError"
                     [isDisplayNameVisible]="isDisplayNameVisible()"
                     [name]="field.name"
                     [options]="field.options || []"
@@ -63,27 +65,27 @@
             <app-checkbox-group
                     (blur)="setFieldToBeEdited(field.name)"
                     (modify)="onFieldChange(field.name, $event); setFieldToBeEdited(field.name)"
-                    [class]="fieldsValidationErrors()[field.name] ? 'input-error' : ''"
+                    [class]="fieldError ? 'input-error' : ''"
                     [displayName]="field.displayName"
-                    [error]="fieldsValidationErrors()[field.name]"
+                    [error]="fieldError"
                     [isDisplayNameVisible]="isDisplayNameVisible()"
                     [name]="field.name"
                     [options]="field.options || []"
-                    [value]="fieldValues()[field.name]"
+                    [value]="fieldValue"
             />
         }
         @if (field.type === 'select' || field.type === 'dropdown') {
             <app-dropdown-selector
                     (blur)="setFieldToBeEdited(field.name)"
                     (modify)="onFieldChange(field.name, $event); setFieldToBeEdited(field.name)"
-                    [class]="fieldsValidationErrors()[field.name] ? 'input-error' : ''"
+                    [class]="fieldError ? 'input-error' : ''"
                     [displayName]="field.displayName"
-                    [error]="fieldsValidationErrors()[field.name]"
+                    [error]="fieldError"
                     [hint]="field.hint"
                     [isDisplayNameVisible]="isDisplayNameVisible()"
                     [name]="field.name"
                     [options]="field.options || []"
-                    [value]="fieldValues()[field.name]"
+                    [value]="fieldValue"
             />
         }
 

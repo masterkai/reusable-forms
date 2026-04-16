@@ -74,6 +74,7 @@ export class UltimateForm implements OnInit {
 	fieldHasBeenTouched = signal<{ [key: string]: boolean }>({});
 
 
+	valueChange = output<any>()
 	submit = output<any>()
 	hasValidationErrors = computed(() => {
 		return Object.keys(this.fieldsValidationErrors()).length > 0;
@@ -85,7 +86,7 @@ export class UltimateForm implements OnInit {
 			if (this.validateOn() === ValidateOn.Change) {
 				this.fieldsValidationErrors.set(this.getValidationErrors(false));
 			}
-			this.submit.emit(values);
+			this.valueChange.emit(values);
 		})
 	}
 
