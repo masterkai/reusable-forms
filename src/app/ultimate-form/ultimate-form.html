@@ -93,14 +93,13 @@
 
     }
     @if (isButtonVisible()) {
-        <button
-                pButton
-                (click)="submitForm()"
+        <p-button
+                (onClick)="submitForm()"
                 class="p-button-primary"
                 [disabled]="!allFieldsHasValue() || hasValidationErrors()"
                 label="Submit"
                 type="button"
-        ></button>
+        ></p-button>
     }
 
 </div>
