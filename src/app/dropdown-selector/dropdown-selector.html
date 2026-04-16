@@ -9,7 +9,7 @@
 			[placeholder]="hint() || 'Please select an option'"
 			(ngModelChange)="onValueChanged($event)"
 			appendTo="body"
-			styleClass="full-width-select"
+			class="full-width-select"
 	/>
 	@if (error()) {
 		<small class="error-message">{{ error() }}</small>
